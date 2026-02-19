@@ -102,10 +102,10 @@ const Academics = () => {
         <div className="max-w-[1240px] mx-auto px-5 md:px-12">
           <div className="flex items-center gap-2 mb-3">
             <FileText className="w-5 h-5 text-accent" />
-            <h2 className="text-3xl font-bold text-foreground">Registrar's Office</h2>
+            <h2 className="text-3xl font-bold text-foreground">Registrar&apos;s Office</h2>
           </div>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            The Registrar's Office maintains academic records, coordinates course registration, and ensures the integrity of
+            The Registrar&apos;s Office maintains academic records, coordinates course registration, and ensures the integrity of
             academic policies and procedures.
           </p>
           <div className="mt-5 bg-secondary/40 rounded-lg p-5 border border-border">

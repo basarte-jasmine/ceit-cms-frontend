@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useParams } from "next/navigation";
 
 type DeptTag = "CE" | "EE" | "IT";
 
@@ -67,8 +67,8 @@ function TagPills({ tags = [] as DeptTag[] }) {
 }
 
 export default function NewsArticlePage() {
-  const router = useRouter();
-  const slug = typeof router.query.slug === "string" ? router.query.slug : "";
+  const params = useParams<{ slug: string }>();
+  const slug = params?.slug ?? "";
 
   const article = ARTICLES.find((a) => a.slug === slug);
 

@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { GraduationCap, BookOpen, ArrowRight } from "lucide-react";
@@ -82,7 +83,7 @@ function normalizeDeptParam(dept: unknown): DeptTag | "ALL" {
   return "ALL";
 }
 
-export default function News() {
+function NewsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const activeFilter = normalizeDeptParam(searchParams.get("dept"));
@@ -305,5 +306,13 @@ export default function News() {
         </div>
       </section>
     </div>
+  );
+}
+
+export default function News() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-background" />}>
+      <NewsContent />
+    </Suspense>
   );
 }
