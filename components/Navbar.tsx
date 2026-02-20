@@ -59,10 +59,10 @@ const Navbar = () => {
       <div className="max-w-[1500px] mx-auto px-6 md:px-16 flex items-center justify-between h-20">
         <Link href="/" onClick={handleLinkClick}>
           <Image
-            src="/box-icon.svg"
+            src="/CEIT_Logo.png"
             alt="PLV CEIT logo"
-            width={42}
-            height={42}
+            width={50}
+            height={50}
             className="rounded-full"
             priority
           />
