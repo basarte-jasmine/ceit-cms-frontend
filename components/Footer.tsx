@@ -6,14 +6,17 @@ const updates = [
   {
     name: "Association of Civil Engineering Students",
     link: "https://www.facebook.com/plv.aces",
+    image: "/CE_Logo.png",
   },
   {
     name: "Association of Electrical Engineering Students",
     link: "https://www.facebook.com/PLVAEES2004",
+    image: "/EE_Logo.png",
   },
   {
     name: "Valenzuela Information Technology Society",
     link: "https://www.facebook.com/ValenzuelaITSociety",
+    image: "/vits-logo.png",
   },
 ];
 
@@ -41,10 +44,10 @@ const Footer = () => {
           <div className="border-r border-white/10 pr-6">
             <div className="mb-4 flex items-start gap-3">
               <Image
-                src="/box-icon.svg"
+                src="/PLV_Logo.png"
                 alt="PLV CEIT logo"
-                width={56}
-                height={56}
+                width={60}
+                height={60}
                 className="rounded-full"
               />
               <div>
@@ -74,7 +77,7 @@ const Footer = () => {
                 href="https://www.facebook.com/PamantasanNgLungsodNgValenzuelaOfficialAccount"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded bg-white/15 p-1.5 text-white hover:bg-white/30 transition-colors"
+                className="rounded bg-white/15 p-3 text-white hover:bg-white/30 transition-colors"
                 aria-label="Facebook"
               >
                 <Facebook className="h-4 w-4" />
@@ -97,13 +100,13 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   className="group flex items-center gap-4 rounded px-2 py-2 transition-colors hover:bg-white/10"
                 >
-                  {/* Placeholder Circle Logo */}
+                  {/* Organization Logo */}
                   <div className="h-10 w-10 shrink-0 rounded-full overflow-hidden bg-white/20 border border-white/30 flex items-center justify-center">
                     <Image
-                      src="/placeholder-logo.png"
-                      alt="Department Logo"
-                      width={40}
-                      height={40}
+                      src={item.image}
+                      alt={item.name}
+                      width={50}
+                      height={50}
                       className="object-cover"
                     />
                   </div>
@@ -137,7 +140,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-7 border-t border-white/20 pt-5">
+        <div className="mt-7 border-t border-white/20 pt-2">
           <p className="text-[12px] text-white/70">
             © 2026 Copyright. All rights reserved.
           </p>

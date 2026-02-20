@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -23,9 +24,9 @@ const heroSlides = [
 ];
 
 const studentOrgs = [
-  { name: "Association of Civil Engineering Students", abbr: "ACES" },
-  { name: "Association of Electrical Engineering Students", abbr: "AEES" },
-  { name: "Valenzuela Information Technology Society", abbr: "VITS" },
+  { name: "Association of Civil Engineering Students", abbr: "ACES", image: "/CE_Logo.png" },
+  { name: "Association of Electrical Engineering Students", abbr: "AEES", image: "/EE_Logo.png" },
+  { name: "Valenzuela Information Technology Society", abbr: "VITS", image: "/vits-logo.png" },
 ];
 
 const newsItems = [
@@ -71,7 +72,7 @@ export default function Index() {
       {/* HERO */}
       <section
         className="relative w-full overflow-hidden flex flex-col"
-        style={{ background: "hsl(var(--navy-mid))", minHeight: "540px" }}
+        style={{ background: "hsl(var(--navy-mid))", minHeight: "640px" }}
       >
         <div className="absolute inset-0 bg-gray-600 opacity-40" />
         <div
@@ -83,7 +84,7 @@ export default function Index() {
         />
 
         {/* SLIDER CONTENT */}
-        <div className="relative z-10 flex-1 flex flex-col justify-end px-5 md:px-12 pb-20 max-w-[1240px] w-full mx-auto">
+        <div className="relative z-10 flex-1 flex flex-col justify-end px-5 md:px-12 pb-24 max-w-[1400px] w-full mx-auto">
           {/* viewport */}
           <div className="overflow-hidden">
             {/* track */}
@@ -93,16 +94,16 @@ export default function Index() {
             >
               {heroSlides.map((slide, idx) => (
                 <div key={idx} className="min-w-full">
-                  <div className="max-w-4xl">
-                    <h1 className="text-4xl md:text-6xl font-extrabold text-white leading-tight">
+                  <div className="max-w-5xl">
+                    <h1 className="text-5xl md:text-7xl font-extrabold text-white leading-tight">
                       {slide.heading}
                     </h1>
-                    <p className="text-base text-white/80 mt-4 leading-relaxed max-w-2xl">
+                    <p className="text-lg text-white/80 mt-6 leading-relaxed max-w-3xl">
                       {slide.description}
                     </p>
 
-                    <button className="mt-6 border border-white/70 text-white text-sm px-6 py-2.5 rounded-full inline-flex items-center gap-2 hover:bg-white/10 transition-colors w-fit">
-                      READ MORE <ArrowRight className="w-4 h-4" />
+                    <button className="mt-8 border border-white/70 text-white text-base px-8 py-3 rounded-full inline-flex items-center gap-2 hover:bg-white/10 transition-colors w-fit">
+                      READ MORE <ArrowRight className="w-5 h-5" />
                     </button>
                   </div>
                 </div>
@@ -147,26 +148,38 @@ export default function Index() {
       </section>
 
       {/* COLLEGE INTRO */}
-      <section className="py-16 md:py-20 text-center border-b border-border bg-[#f5f5f6]">
-        <div className="max-w-[980px] mx-auto px-5 md:px-8">
-          <div className="w-20 h-20 rounded-full bg-gray-300 mx-auto mb-7 flex items-center justify-center text-xs text-gray-600 font-bold">
-            LOGO
+      <section className="py-24 md:py-32 text-center border-b border-border bg-[#f5f5f6]">
+        <div className="max-w-[1100px] mx-auto px-5 md:px-8">
+          <div className="w-28 h-28 rounded-full bg-gray-300 mx-auto mb-10 overflow-hidden flex items-center justify-center">
+            <Image
+              src="/CEIT_Logo.png"
+              alt="College Logo"
+              width={112}
+              height={112}
+              className="object-cover"
+              priority
+            />
           </div>
-          <h2 className="text-4xl font-extrabold text-accent">
+          <h2 className="text-5xl font-extrabold text-accent leading-tight">
             College of Engineering and Information Technology
           </h2>
-          <p className="text-lg text-muted-foreground mt-5 leading-relaxed">
+          <p className="text-xl text-muted-foreground mt-8 leading-relaxed">
             Our college offers Civil Engineering, Electrical Engineering, and Information Technology programs.
             Each program is supported by a dedicated student organization:
           </p>
 
-          <div className="flex justify-center gap-14 md:gap-28 mt-14 flex-wrap">
+          <div className="flex justify-center gap-16 md:gap-32 mt-20 flex-wrap">
             {studentOrgs.map((org) => (
-              <div key={org.abbr} className="flex flex-col items-center gap-3">
-                <div className="w-24 h-24 rounded-full bg-gray-300 flex items-center justify-center text-sm text-gray-600 font-bold border border-border">
-                  {org.abbr}
+              <div key={org.abbr} className="flex flex-col items-center gap-5">
+                <div className="relative w-32 h-32">
+                  <Image
+                    src={org.image}
+                    alt={org.name}
+                    fill
+                    
+                  />
                 </div>
-                <p className="text-sm text-muted-foreground max-w-[220px] text-center leading-tight">
+                <p className="text-base text-muted-foreground max-w-[260px] text-center leading-relaxed">
                   {org.name}
                 </p>
               </div>
@@ -177,66 +190,72 @@ export default function Index() {
 
       {/* MEET THE DEAN */}
       <section className="bg-secondary/40 overflow-hidden">
-        <div className="max-w-[1240px] mx-auto flex flex-col md:flex-row items-stretch min-h-[430px]">
+        <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row items-stretch min-h-[550px]">
           <div className="relative md:w-1/2 flex-shrink-0 flex items-end">
             <div
-              className="absolute bottom-0 left-0 w-[65%] h-[88%] rounded-tr-[100px]"
+              className="absolute bottom-0 left-0 w-[65%] h-[88%] rounded-tr-[120px]"
               style={{ background: "hsl(var(--accent))" }}
             />
-            <div className="relative z-10 ml-10 mb-0">
-              <div className="w-[340px] h-[360px] bg-gray-400 rounded-lg flex items-center justify-center text-gray-600 text-sm font-medium">
-                Image Placeholder
+            <div className="relative z-10 ml-14 mb-0">
+              <div className="w-[400px] h-[420px] bg-gray-400 rounded-lg overflow-hidden flex items-center justify-center">
+                <Image
+                  src="/Engr-Jordan.jpg"
+                  alt="Dean"
+                  width={400}
+                  height={420}
+                  className="object-cover w-full h-full"
+                />
               </div>
             </div>
           </div>
 
-          <div className="md:w-1/2 flex flex-col justify-center px-5 md:px-12 py-14">
-            <p className="text-sm font-bold text-accent uppercase tracking-widest mb-2">
+          <div className="md:w-1/2 flex flex-col justify-center px-5 md:px-16 py-20">
+            <p className="text-base font-bold text-accent uppercase tracking-widest mb-4">
               Meet the Dean
             </p>
-            <h2 className="text-4xl md:text-6xl font-extrabold text-foreground leading-tight">
+            <h2 className="text-5xl md:text-7xl font-extrabold text-foreground leading-tight">
               Engr. Jordan Velasco
             </h2>
-            <p className="text-base text-muted-foreground mt-4 leading-relaxed max-w-sm">
+            <p className="text-lg text-muted-foreground mt-6 leading-relaxed max-w-lg">
               Under his guidance, the College continues to uphold its mission of producing future-ready engineers and IT
               professionals who are equipped to meet the evolving demands of society and industry.
             </p>
             <Link
               href="/academics"
-              className="mt-6 inline-flex items-center gap-2 text-sm border border-foreground/40 rounded-full px-6 py-2.5 hover:border-accent hover:text-accent transition-colors w-fit"
+              className="mt-8 inline-flex items-center gap-2 text-base border border-foreground/40 rounded-full px-8 py-3 hover:border-accent hover:text-accent transition-colors w-fit"
             >
-              Meet the school officials <ArrowRight className="w-4 h-4" />
+              Meet the school officials <ArrowRight className="w-5 h-5" />
             </Link>
           </div>
         </div>
       </section>
 
       {/* NEWS */}
-      <section className="py-14 md:py-16 bg-[#f5f5f6]">
-        <div className="max-w-[1240px] mx-auto px-5 md:px-12">
-          <h2 className="text-4xl font-extrabold text-accent uppercase tracking-widest mb-10">
+      <section className="py-24 md:py-32 bg-[#f5f5f6]">
+        <div className="max-w-[1400px] mx-auto px-5 md:px-12">
+          <h2 className="text-5xl font-extrabold text-accent uppercase tracking-widest mb-16">
             NEWS
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-border">
             {newsItems.map((item, i) => (
-              <div key={i} className="px-0 md:px-8 first:pl-0 last:pr-0 py-4 md:py-0">
-                <h3 className="text-2xl font-bold text-foreground leading-snug">
+              <div key={i} className="px-0 md:px-10 first:pl-0 last:pr-0 py-8 md:py-0">
+                <h3 className="text-3xl font-bold text-foreground leading-snug">
                   {item.title}
                 </h3>
-                <p className="text-sm text-muted-foreground mt-3 leading-relaxed italic">
+                <p className="text-base text-muted-foreground mt-4 leading-relaxed italic">
                   {item.description}
                 </p>
               </div>
             ))}
           </div>
 
-          <div className="mt-10 text-right">
+          <div className="mt-14 text-right">
             <Link
               href="/news"
-              className="text-sm font-bold text-accent inline-flex items-center gap-1.5 hover:underline"
+              className="text-base font-bold text-accent inline-flex items-center gap-2 hover:underline"
             >
-              VIEW ALL NEWS <ArrowRight className="w-4 h-4" />
+              VIEW ALL NEWS <ArrowRight className="w-5 h-5" />
             </Link>
           </div>
         </div>

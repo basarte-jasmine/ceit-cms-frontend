@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Shield, BookOpen, Briefcase, Heart } from "lucide-react";
 
 const counsellingServices = [
@@ -46,95 +47,118 @@ const ojtSteps = [
 const Students = () => {
   return (
     <div className="min-h-screen bg-background">
-      <section className="bg-secondary/60 py-12 md:py-14 border-b border-border">
-        <div className="max-w-[1240px] mx-auto px-5 md:px-12">
-          <h1 className="text-5xl font-extrabold text-foreground">Student life</h1>
-          <p className="text-base text-muted-foreground mt-2 max-w-md">
+      {/* HEADER */}
+      <section className="bg-secondary/60 py-16 md:py-20 border-b border-border">
+        <div className="max-w-[1400px] mx-auto px-5 md:px-12">
+          <h1 className="text-6xl md:text-7xl font-extrabold text-foreground">Student life</h1>
+          <p className="text-lg text-muted-foreground mt-4 max-w-2xl">
             Discover resources, programs, and opportunities designed to enrich your academic journey and personal growth.
           </p>
         </div>
       </section>
 
-      <section className="py-14 md:py-16 border-b border-border">
-        <div className="max-w-[1240px] mx-auto px-5 md:px-12 flex flex-col md:flex-row gap-10 items-start">
-          <div className="md:w-1/2">
-            <h2 className="text-5xl font-bold text-foreground">Guidance &amp; Counselling</h2>
-            <p className="text-sm text-muted-foreground mt-3 leading-relaxed">
+      {/* GUIDANCE & COUNSELLING */}
+      <section className="py-24 md:py-32 border-b border-border">
+        <div className="max-w-[1400px] mx-auto px-5 md:px-12 flex flex-col lg:flex-row gap-16 items-start">
+          <div className="lg:w-1/2">
+            <h2 className="text-5xl font-extrabold text-foreground mb-6">Guidance &amp; Counselling</h2>
+            <p className="text-lg text-muted-foreground mb-10 leading-relaxed max-w-xl">
               Our Guidance and Counselling Center provides comprehensive support services to help you navigate academic
               challenges, personal concerns, and career decisions throughout your university journey.
             </p>
-            <ul className="mt-6 space-y-4">
+            <ul className="space-y-6">
               {counsellingServices.map((svc) => (
-                <li key={svc.title} className="flex items-start gap-3">
-                  <svc.icon className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
+                <li key={svc.title} className="flex items-start gap-4">
+                  <svc.icon className="w-6 h-6 text-accent flex-shrink-0 mt-1" />
                   <div>
-                    <p className="text-sm font-bold text-foreground">{svc.title}</p>
-                    <p className="text-xs text-muted-foreground">{svc.sub}</p>
+                    <p className="text-lg font-bold text-foreground">{svc.title}</p>
+                    <p className="text-base text-muted-foreground leading-relaxed mt-1">{svc.sub}</p>
                   </div>
                 </li>
               ))}
             </ul>
           </div>
-          <div className="md:w-1/2 flex-shrink-0">
-            <div className="w-full h-64 bg-gray-300 rounded-lg flex items-center justify-center text-gray-600 text-sm font-medium">
-              Image Placeholder
+          <div className="lg:w-1/2 flex-shrink-0 flex justify-end">
+            <div className="w-full max-w-650 h-110 bg-gray-300 rounded-lg overflow-hidden flex items-center justify-center">
+              <Image
+                src="/Guidance.jpg"
+                alt="Guidance & Counselling"
+                width={500}
+                height={1000}
+                className="object-cover w-full h-full"
+              />
             </div>
           </div>
         </div>
       </section>
 
-      <section className="py-16 md:py-20 bg-secondary/40 border-b border-border">
-        <div className="max-w-[1240px] mx-auto px-5 md:px-12 text-center">
-          <span className="inline-block bg-accent text-accent-foreground text-xs font-bold px-3 py-1 rounded mb-4">
+      {/* NSTP */}
+      <section className="py-24 md:py-32 bg-secondary/40 border-b border-border">
+        <div className="max-w-[1400px] mx-auto px-5 md:px-12 text-center">
+          <span className="inline-block bg-accent text-accent-foreground text-sm font-bold px-4 py-2 rounded-full mb-6">
             Required Program
           </span>
-          <h2 className="text-5xl font-bold text-foreground">National Service Training Program (NSTP)</h2>
-          <p className="text-sm text-muted-foreground mt-2 max-w-lg mx-auto leading-relaxed">
+          <h2 className="text-5xl font-extrabold text-foreground mb-6">National Service Training Program (NSTP)</h2>
+          <p className="text-lg text-muted-foreground mb-16 max-w-2xl mx-auto leading-relaxed">
             The NSTP aims to promote civic consciousness and defense preparedness among the youth while developing their
             physical, moral, spiritual, intellectual, and social well-being.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {nstpPrograms.map((prog) => (
-              <div key={prog.name} className="bg-background rounded-xl p-6 border border-border text-left">
-                <prog.icon className="w-6 h-6 text-muted-foreground mb-4" />
-                <h3 className="text-3xl font-bold text-foreground">{prog.name}</h3>
-                <p className="text-xs text-muted-foreground mt-2 leading-relaxed">{prog.desc}</p>
+              <div key={prog.name} className="bg-background rounded-xl p-8 border border-border text-left shadow-sm hover:shadow-md transition">
+                <prog.icon className="w-8 h-8 text-muted-foreground mb-6" />
+                <h3 className="text-2xl font-bold text-foreground mb-4">{prog.name}</h3>
+                <p className="text-base text-muted-foreground leading-relaxed">{prog.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="py-16 md:py-20">
-        <div className="max-w-[1240px] mx-auto px-5 md:px-12 flex flex-col md:flex-row gap-10 items-start">
-          <div className="md:w-1/2 grid grid-cols-2 gap-3">
-            <div className="bg-gray-300 h-52 rounded-lg flex items-center justify-center text-gray-600 text-sm font-medium">Image Placeholder</div>
-            <div className="bg-gray-400 h-52 rounded-lg mt-8 flex items-center justify-center text-gray-600 text-sm font-medium">Image Placeholder</div>
+      {/* OJT */}
+      <section className="py-24 md:py-32 border-b border-border">
+        <div className="max-w-[1400px] mx-auto px-5 md:px-12 flex flex-col lg:flex-row gap-16 items-start">
+          <div className="lg:w-1/2 flex-shrink-0">
+            <div className="grid grid-cols-2 gap-3">
+              <Image
+                src="/ojt-image-1.jpg"
+                alt="OJT Program 1"
+                width={200}
+                height={200}
+                className="object-cover w-full h-auto rounded-lg"
+              />
+              <Image
+                src="/ojt-image-2.jpg"
+                alt="OJT Program 2"
+                width={200}
+                height={200}
+                className="object-cover w-full h-auto rounded-lg"
+              />
+            </div>
           </div>
-
-          <div className="md:w-1/2">
-            <span className="inline-block bg-accent text-accent-foreground text-xs font-bold px-3 py-1 rounded mb-3">
+          <div className="lg:w-1/2">
+            <span className="inline-block bg-accent text-accent-foreground text-sm font-bold px-4 py-2 rounded-full mb-6">
               Career Development
             </span>
-            <h2 className="text-5xl font-bold text-foreground">On-The-Job Training (OJT)</h2>
-            <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
-              Our OJT program provides valuable work experience in your field of study, helping you apply classroom knowledge
-              to real-world situations and build professional connections.
+            <h2 className="text-5xl font-extrabold text-foreground mb-6">On-The-Job Training (OJT)</h2>
+            <p className="text-lg text-muted-foreground mb-10 leading-relaxed">
+              Our OJT program provides valuable work experience in your field of study, helping you apply classroom knowledge to real-world situations and build professional connections.
             </p>
-            <h4 className="text-sm font-bold text-foreground mt-6 mb-4">OJT Process</h4>
-            <ol className="space-y-4">
+            
+            <div className="space-y-8">
+              <h3 className="text-2xl font-bold text-foreground">OJT Process</h3>
               {ojtSteps.map((step) => (
-                <li key={step.num} className="flex items-start gap-3">
-                  <span className="w-6 h-6 rounded-full bg-primary text-primary-foreground text-xs font-bold flex items-center justify-center flex-shrink-0">
+                <div key={step.num} className="flex gap-6">
+                  <div className="flex items-center justify-center w-10 h-10 rounded-full bg-foreground text-background font-bold text-lg flex-shrink-0">
                     {step.num}
-                  </span>
-                  <div>
-                    <p className="text-sm font-bold text-foreground">{step.title}</p>
-                    <p className="text-xs text-muted-foreground">{step.desc}</p>
                   </div>
-                </li>
+                  <div>
+                    <h4 className="text-lg font-bold text-foreground mb-2">{step.title}</h4>
+                    <p className="text-base text-muted-foreground leading-relaxed">{step.desc}</p>
+                  </div>
+                </div>
               ))}
-            </ol>
+            </div>
           </div>
         </div>
       </section>
