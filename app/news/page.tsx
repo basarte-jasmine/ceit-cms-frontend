@@ -109,14 +109,14 @@ function NewsContent() {
   return (
     <div className="min-h-screen bg-background">
       {/* FILTER BAR */}
-      <section className="border-b border-border">
+      <section className="border-b border-border page-hero-gradient">
         <div className="max-w-[1240px] mx-auto px-5 md:px-12 py-6">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
             <div>
-              <h1 className="text-2xl md:text-3xl font-extrabold text-foreground">
+              <h1 className="text-2xl md:text-3xl font-extrabold text-white">
                 News
               </h1>
-              <p className="text-sm text-muted-foreground mt-1">
+              <p className="text-sm text-white/90 mt-1">
                 Filter by department: CE, EE, or IT
               </p>
             </div>

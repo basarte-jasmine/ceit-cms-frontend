@@ -221,7 +221,7 @@ export default function Index() {
               professionals who are equipped to meet the evolving demands of society and industry.
             </p>
             <Link
-              href="/academics"
+              href="/administration"
               className="mt-8 inline-flex items-center gap-2 text-base border border-foreground/40 rounded-full px-8 py-3 hover:border-accent hover:text-accent transition-colors w-fit"
             >
               Meet the school officials <ArrowRight className="w-5 h-5" />

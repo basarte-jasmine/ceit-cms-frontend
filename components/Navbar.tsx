@@ -18,6 +18,8 @@ const Navbar = () => {
     { to: "/", label: "Home" },
     { to: "/academics", label: "Academics" },
     { to: "/students", label: "Students" },
+    { to: "/facility", label: "Facility" },
+    { to: "/administration", label: "Administration" },
     { to: "/news", label: "News" },
   ];
 

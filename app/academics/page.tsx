@@ -39,21 +39,13 @@ const programs = [
   },
 ];
 
-const officials = [
-  { name: "Dr. Nedena C. Torralba", role: "University President" },
-  { name: "Engr. Jordan N. Velasco", role: "Dean, College of Engineering and Information Technology" },
-  { name: "Dr. Nelda Gene C. Mariano", role: "Vice President for Academic Affairs" },
-  { name: "Dr. John Cabaddu", role: "Vice President for Administration" },
-  { name: "Norie Caunda", role: "Secretary, College of Engineering and Information Technology" },
-];
-
 const Academics = () => {
   return (
     <div className="min-h-screen bg-background">
-      <section className="bg-secondary/60 py-16 md:py-20 border-b border-border">
+      <section className="page-hero-gradient py-16 md:py-20 border-b border-border">
         <div className="max-w-[1400px] mx-auto px-5 md:px-12">
-          <h1 className="text-6xl md:text-7xl font-extrabold text-foreground">Academics</h1>
-          <p className="text-lg text-muted-foreground mt-4 max-w-2xl">
+          <h1 className="text-6xl md:text-7xl font-extrabold text-white">Academics</h1>
+          <p className="text-lg text-white/90 mt-4 max-w-2xl">
             Discover our programs designed to inspire, challenge, and prepare you for success in a rapidly changing world.
           </p>
         </div>
@@ -141,31 +133,6 @@ const Academics = () => {
         </div>
       </section>
 
-      <section className="py-24 md:py-32">
-        <div className="max-w-[1400px] mx-auto px-5 md:px-12 text-center">
-          <h2 className="text-5xl font-extrabold text-foreground">School Officials</h2>
-          <p className="text-lg text-muted-foreground mt-4 max-w-2xl mx-auto">
-            Meet the dedicated leaders who guide our College of Engineering and Information Technology.
-          </p>
-          <div className="flex flex-wrap justify-center gap-x-20 gap-y-16 mt-16">
-            {officials.map((official) => (
-              <div key={official.name} className="flex flex-col items-center w-56">
-                <div className="w-32 h-32 rounded-full bg-gray-300 flex items-center justify-center text-gray-500 text-sm font-medium mb-6 overflow-hidden">
-                  <Image
-                    src={`/official-${official.name.toLowerCase().replace(/\\s+/g, "-")}.jpg`}
-                    alt={official.name}
-                    width={128}
-                    height={128}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <p className="text-lg font-bold text-foreground text-center">{official.name}</p>
-                <p className="text-base text-muted-foreground text-center mt-2">{official.role}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
     </div>
   );
 };

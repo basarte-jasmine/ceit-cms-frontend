@@ -1,5 +1,40 @@
+"use client";
+
 import Image from "next/image";
+import { useState } from "react";
 import { Shield, BookOpen, Briefcase, Heart } from "lucide-react";
+
+const departments = {
+  EE: {
+    title: "Association of Electrical Engineering Students (AEES)",
+    description:
+      "The Association of Electrical Engineering Students (AEES), established in 2004, two years after the founding of Pamantasan ng Lungsod ng Valenzuela, is a duly recognized student organization committed to the academic, professional, and personal development of electrical engineering students. The organization upholds active student involvement, discipline, and continuous excellence while fostering camaraderie, cooperation, and leadership among its members to prepare them for future professional practice.",
+    socialLinks: [
+      { label: "Facebook", url: "https://www.facebook.com/PLVAEES2004" },
+      { label: "Email", url: "mailto:aeesplv@gmail.com" },
+    ],
+  },
+  IT: {
+    title: "Valenzuela Information Technology Society (VITS)",
+    description:
+      "The Valenzuela Information Technology Society (VITS) was founded in 2011 within the Department of Information Technology at Pamantasan ng Lungsod ng Valenzuela. The organization was established to unify the voices of Information Technology students. VITS aims to build strong camaraderie among the members and to strengthen the foundation of Information Technology students at PLV. Additionally, VITS serves as a representation of the PLV student body, conveying the needs and grievances of its members.",
+    socialLinks: [
+      { label: "VITS Page", url: "https://www.facebook.com/plv.aces" },
+      { label: "VITS ITlympics Page", url: "https://www.instagram.com/plv.aces" },
+    ],
+  },
+  CE: {
+    title: "PLV-ACES",
+    description:
+      "PLV-ACES was founded in 2012 to support the academic and professional growth of civil engineering students and dedicated to upholding a strong union among its members while fostering a culture of technical excellence. In 2022, it becomes a student chapter of the Philippine Institute of Civil Engineering (PICE), strengthening its industry connections. In 2023, it further expanded learning and networking opportunities by joining the American Concrete Institute (ACI), providing members with broader opportunities for technical knowledge, research, and industry connections.",
+    socialLinks: [
+      { label: "Facebook", url: "https://www.facebook.com/plv.aces" },
+      { label: "Instagram", url: "https://www.instagram.com/plv.aces" },
+    ],
+  },
+} as const;
+
+type DepartmentKey = keyof typeof departments;
 
 const counsellingServices = [
   {
@@ -44,16 +79,68 @@ const ojtSteps = [
   { num: 4, title: "Evaluation & Completion", desc: "Submit final requirements and receive evaluation from both company and faculty supervisors." },
 ];
 
+const tabOrder: DepartmentKey[] = ["EE", "IT", "CE"];
+
 const Students = () => {
+  const [activeDepartment, setActiveDepartment] = useState<DepartmentKey>("EE");
+  const currentDepartment = departments[activeDepartment];
+
   return (
     <div className="min-h-screen bg-background">
       {/* HEADER */}
-      <section className="bg-secondary/60 py-16 md:py-20 border-b border-border">
+      <section className="page-hero-gradient py-16 md:py-20 border-b border-border">
         <div className="max-w-[1400px] mx-auto px-5 md:px-12">
-          <h1 className="text-6xl md:text-7xl font-extrabold text-foreground">Student life</h1>
-          <p className="text-lg text-muted-foreground mt-4 max-w-2xl">
+          <h1 className="text-6xl md:text-7xl font-extrabold text-white">Student life</h1>
+          <p className="text-lg text-white/90 mt-4 max-w-2xl">
             Discover resources, programs, and opportunities designed to enrich your academic journey and personal growth.
           </p>
+        </div>
+      </section>
+
+      {/* DEPARTMENT TABS */}
+      <section className="border-b border-border bg-background">
+        <div className="max-w-[1400px] mx-auto px-5 md:px-12 py-6 md:py-8">
+          <div className="flex flex-wrap gap-2 md:gap-3">
+            {tabOrder.map((department) => {
+              const isActive = activeDepartment === department;
+              return (
+                <button
+                  key={department}
+                  onClick={() => setActiveDepartment(department)}
+                  className={`px-6 py-3 text-base font-semibold rounded-md border transition cursor-pointer ${
+                    isActive
+                      ? "bg-green-600 text-white border-green-600"
+                      : "bg-secondary text-foreground border-border hover:bg-secondary/80"
+                  }`}
+                  aria-pressed={isActive}
+                >
+                  {department}
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="mt-7 rounded-xl border border-border bg-secondary/30 p-6 md:p-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground">{currentDepartment.title}</h2>
+            <p className="text-base md:text-lg text-muted-foreground mt-3 max-w-4xl">{currentDepartment.description}</p>
+            <div className="mt-6">
+              <p className="text-sm font-semibold tracking-wide uppercase text-foreground">Social Media Links</p>
+              <ul className="mt-3 space-y-2">
+                {currentDepartment.socialLinks.map((link) => (
+                  <li key={link.label}>
+                    <a
+                      href={link.url}
+                      target={link.url.startsWith("http") ? "_blank" : undefined}
+                      rel={link.url.startsWith("http") ? "noopener noreferrer" : undefined}
+                      className="text-base text-accent hover:underline"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -144,7 +231,7 @@ const Students = () => {
             <p className="text-lg text-muted-foreground mb-10 leading-relaxed">
               Our OJT program provides valuable work experience in your field of study, helping you apply classroom knowledge to real-world situations and build professional connections.
             </p>
-            
+
             <div className="space-y-8">
               <h3 className="text-2xl font-bold text-foreground">OJT Process</h3>
               {ojtSteps.map((step) => (
