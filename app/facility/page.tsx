@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
 import { facilities } from "@/lib/facilities";
 
 const FacilityPage = () => {
+  const visibleFacilities = facilities.filter((facility) => facility.slug !== "ceit-building");
+
   return (
     <div className="min-h-screen bg-background">
       <section
@@ -22,12 +23,10 @@ const FacilityPage = () => {
       <section className="py-12 md:py-16">
         <div className="mx-auto max-w-[1400px] px-5 md:px-12">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {facilities.map((facility) => (
+            {visibleFacilities.map((facility) => (
               <Link
                 key={facility.slug}
                 href={`/facility/${facility.slug}`}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="group block overflow-hidden rounded-lg border border-border bg-card shadow-sm transition hover:-translate-y-1 hover:shadow-md"
               >
                 <div className="relative aspect-[16/10] w-full overflow-hidden bg-muted">

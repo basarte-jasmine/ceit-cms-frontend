@@ -99,3 +99,19 @@
     background-image: linear-gradient(to right, #f97316, #fb923c, #7c3aed);
   }
 }
+
+@layer utilities {
+  @keyframes logo-float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  .logo-float {
+    animation: logo-float 3s ease-in-out infinite;
+  }
+}

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, FileText, Check } from "lucide-react";
 
 const heroSlides = [
   {
@@ -27,24 +27,6 @@ const studentOrgs = [
   { name: "Association of Civil Engineering Students", abbr: "ACES", image: "/CE_Logo.png" },
   { name: "Association of Electrical Engineering Students", abbr: "AEES", image: "/EE_Logo.png" },
   { name: "Valenzuela Information Technology Society", abbr: "VITS", image: "/vits-logo.png" },
-];
-
-const newsItems = [
-  {
-    title: "April Joy Yapcengco Ends Her Run with Grace, Grit, and Glory.",
-    description:
-      "The Pamantasan ng Lungsod ng Valenzuela's courts bids a triumphant and emotional farewell to one of its most iconic athletes—April Joy Yapcengco.",
-  },
-  {
-    title: "CEIT Shines Bright at PLV Intramurals 2025",
-    description:
-      "The PLV Intramurals 2025 officially wrapped up last April 21, bringing weeks of excitement, camaraderie, and competitive spirit across various sports.",
-  },
-  {
-    title: "PLV CEIT Celebrates New Civil Engineer Board Passers",
-    description:
-      "The College of Engineering and Information Technology proudly celebrates the success of its recent Civil Engineering graduates who passed the April 2025 Civil Engineering Licensure Examination.",
-  },
 ];
 
 export default function Index() {
@@ -148,7 +130,7 @@ export default function Index() {
       </section>
 
       {/* COLLEGE INTRO */}
-      <section className="py-24 md:py-32 text-center border-b border-border bg-[#f5f5f6]">
+      <section className="py-24 md:py-32 text-center border-b border-border bg-white">
         <div className="max-w-[1100px] mx-auto px-5 md:px-8">
           <div className="w-28 h-28 rounded-full bg-gray-300 mx-auto mb-10 overflow-hidden flex items-center justify-center">
             <Image
@@ -169,14 +151,17 @@ export default function Index() {
           </p>
 
           <div className="flex justify-center gap-16 md:gap-32 mt-20 flex-wrap">
-            {studentOrgs.map((org) => (
+            {studentOrgs.map((org, index) => (
               <div key={org.abbr} className="flex flex-col items-center gap-5">
-                <div className="relative w-32 h-32">
+                <div
+                  className="relative w-32 h-32 rounded-full overflow-hidden bg-white logo-float"
+                  style={{ animationDelay: `${index * 0.25}s` }}
+                >
                   <Image
                     src={org.image}
                     alt={org.name}
                     fill
-                    
+                    className="object-cover"
                   />
                 </div>
                 <p className="text-base text-muted-foreground max-w-[260px] text-center leading-relaxed">
@@ -189,15 +174,15 @@ export default function Index() {
       </section>
 
       {/* MEET THE DEAN */}
-      <section className="bg-secondary/40 overflow-hidden">
-        <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row items-stretch min-h-[550px]">
-          <div className="relative md:w-1/2 flex-shrink-0 flex items-end">
+      <section className="bg-[#f5f5f6] overflow-hidden">
+        <div className="max-w-[1400px] mx-auto flex flex-col lg:flex-row items-stretch min-h-[550px]">
+          <div className="relative lg:w-1/2 flex-shrink-0 flex items-end justify-center lg:justify-start">
             <div
-              className="absolute bottom-0 left-0 w-[65%] h-[88%] rounded-tr-[120px]"
+              className="absolute bottom-0 left-0 w-[70%] h-[88%] rounded-tr-[90px] lg:rounded-tr-[120px]"
               style={{ background: "hsl(var(--accent))" }}
             />
-            <div className="relative z-10 ml-14 mb-0">
-              <div className="w-[400px] h-[420px] bg-gray-400 rounded-lg overflow-hidden flex items-center justify-center">
+            <div className="relative z-10 ml-0 lg:ml-14 mb-0">
+              <div className="w-[300px] h-[320px] sm:w-[360px] sm:h-[380px] lg:w-[400px] lg:h-[420px] bg-gray-400 rounded-lg overflow-hidden flex items-center justify-center">
                 <Image
                   src="/Engr-Jordan.jpg"
                   alt="Dean"
@@ -209,7 +194,7 @@ export default function Index() {
             </div>
           </div>
 
-          <div className="md:w-1/2 flex flex-col justify-center px-5 md:px-16 py-20">
+          <div className="lg:w-1/2 flex flex-col justify-center items-center text-center px-5 sm:px-10 lg:px-16 py-16 md:py-20">
             <p className="text-base font-bold text-accent uppercase tracking-widest mb-4">
               Meet the Dean
             </p>
@@ -230,36 +215,47 @@ export default function Index() {
         </div>
       </section>
 
-      {/* NEWS */}
-      <section className="py-24 md:py-32 bg-[#f5f5f6]">
-        <div className="max-w-[1400px] mx-auto px-5 md:px-12">
-          <h2 className="text-5xl font-extrabold text-accent uppercase tracking-widest mb-16">
-            NEWS
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-border">
-            {newsItems.map((item, i) => (
-              <div key={i} className="px-0 md:px-10 first:pl-0 last:pr-0 py-8 md:py-0">
-                <h3 className="text-3xl font-bold text-foreground leading-snug">
-                  {item.title}
-                </h3>
-                <p className="text-base text-muted-foreground mt-4 leading-relaxed italic">
-                  {item.description}
-                </p>
-              </div>
-            ))}
+      <section className="py-16 md:py-20 border-b border-[#e3e7f1] bg-white">
+        <div className="mx-auto max-w-[1200px] px-5 md:px-8">
+          <div className="flex items-center gap-3 mb-6">
+            <FileText className="w-7 h-7 text-[#ef8a22]" />
+            <h2 className="text-4xl md:text-5xl font-extrabold text-[#1f2b55]">Registrar&apos;s Office</h2>
           </div>
 
-          <div className="mt-14 text-right">
-            <Link
-              href="/news"
-              className="text-base font-bold text-accent inline-flex items-center gap-2 hover:underline"
-            >
-              VIEW ALL NEWS <ArrowRight className="w-5 h-5" />
-            </Link>
+          <div className="h-px bg-[#dfe3ef] mb-6" />
+
+          <p className="text-lg text-[#4e5a7b] leading-relaxed max-w-4xl">
+            The Registrar&apos;s Office maintains academic records, coordinates course registration, and ensures the integrity
+            of academic policies and procedures.
+          </p>
+
+          <div className="mt-8 rounded-xl border border-[#dfe3ef] bg-[#f3f4f8] p-6 md:p-8">
+            <h3 className="text-xl font-bold text-[#1f2b55] mb-4">Services</h3>
+            <ul className="space-y-3">
+              {[
+                "Course Registration & Add/Drop",
+                "Transcript Requests",
+                "Degree Verification",
+                "Graduation Processing",
+              ].map((service) => (
+                <li key={service} className="flex items-center gap-3 text-[#1f2b55]">
+                  <Check className="w-5 h-5 text-[#ef8a22]" />
+                  <span className="text-lg">{service}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="mt-8 text-base text-[#4e5a7b] leading-relaxed">
+            <p className="font-semibold text-[#1f2b55]">Contact Information:</p>
+            <p>Telephone: 8352 7000 local 125</p>
+            <p>Email: registrarsoffice_plv@yahoo.com</p>
+            <p>Location: Maysan Road corner Tongco Street, Maysan, Valenzuela City, Valenzuela, Philippines</p>
+            <p>Hours: Monday-Friday, 8:00 AM - 5:00 PM</p>
           </div>
         </div>
       </section>
+
     </div>
   );
 }

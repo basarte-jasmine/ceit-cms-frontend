@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { Facebook } from "lucide-react";
 
 const orgLinks = [
   {
@@ -16,6 +15,11 @@ const orgLinks = [
     name: "Valenzuela Information Technology Society",
     link: "https://www.facebook.com/ValenzuelaITSociety",
     image: "/vits-logo.png",
+  },
+  {
+    name: "CEIT",
+    link: "https://www.facebook.com/plv.ceit",
+    image: "/CEIT_Logo.png",
   },
 ];
 
@@ -89,10 +93,10 @@ const Footer = () => {
                 href="https://www.facebook.com/PamantasanNgLungsodNgValenzuelaOfficialAccount"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-12 w-12 items-center justify-center rounded-full border border-white/30 bg-white/15 text-white transition-colors hover:bg-white/30"
+                className="group flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border border-white/30 bg-white/15 transition-colors hover:bg-white/30"
                 aria-label="PLV Facebook"
               >
-                <Facebook className="h-5 w-5" />
+                <Image src="/PLV_Logo.png" alt="PLV Facebook" width={44} height={44} className="object-cover" />
               </a>
             </div>
           </div>

@@ -20,7 +20,6 @@ const Navbar = () => {
     { to: "/students", label: "Students" },
     { to: "/facility", label: "Facility" },
     { to: "/administration", label: "Administration" },
-    { to: "/news", label: "News" },
   ];
 
   const handleLinkClick = () => {
@@ -48,6 +47,17 @@ const Navbar = () => {
 
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth >= 768) {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
   }, []);
 
   return (
@@ -97,6 +107,7 @@ const Navbar = () => {
           className="md:hidden p-2 text-slate-600 hover:text-accent transition-colors"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle menu"
+          aria-expanded={mobileMenuOpen}
         >
           {mobileMenuOpen ? (
             <X className="w-6 h-6" />
@@ -107,29 +118,37 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div className="md:hidden bg-background border-t border-border animate-fade-in-pop">
-          <div className="px-6 py-4 space-y-4">
-            {links.map((link) => {
-              const isActive = pathname === link.to;
+      <div
+        className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+          mobileMenuOpen
+            ? "max-h-80 opacity-100 border-t border-border"
+            : "max-h-0 opacity-0 border-t border-transparent"
+        }`}
+      >
+        <div
+          className={`bg-background px-6 py-4 space-y-4 transition-transform duration-300 ease-in-out ${
+            mobileMenuOpen ? "translate-y-0" : "-translate-y-2"
+          }`}
+        >
+          {links.map((link) => {
+            const isActive = pathname === link.to;
 
-              return (
-                <div key={link.to}>
-                  <Link
-                    href={link.to}
-                    onClick={handleLinkClick}
-                    className={`block text-sm font-medium transition-colors py-2 ${
-                      isActive ? "text-accent" : "text-slate-600 hover:text-accent"
-                    }`}
-                  >
-                    {link.label}
-                  </Link>
-                </div>
-              );
-            })}
-          </div>
+            return (
+              <div key={link.to}>
+                <Link
+                  href={link.to}
+                  onClick={handleLinkClick}
+                  className={`block text-sm font-medium transition-colors py-2 ${
+                    isActive ? "text-accent" : "text-slate-600 hover:text-accent"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              </div>
+            );
+          })}
         </div>
-      )}
+      </div>
     </nav>
   );
 };

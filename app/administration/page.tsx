@@ -12,13 +12,13 @@ const OrgNode = ({ name, role, compact = false }: OrgNodeProps) => (
   <div
     className={[
       "mx-auto flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 shadow-sm",
-      compact ? "w-[300px]" : "w-[360px]",
+      compact ? "w-[250px] sm:w-[280px] md:w-[300px]" : "w-[280px] sm:w-[320px] md:w-[360px]",
     ].join(" ")}
   >
-    <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full border border-border bg-muted text-[11px] font-semibold text-muted-foreground">
+    <div className="flex h-12 w-12 md:h-14 md:w-14 flex-shrink-0 items-center justify-center rounded-full border border-border bg-muted text-[10px] md:text-[11px] font-semibold text-muted-foreground">
       Image
     </div>
-    <div className="text-left">
+    <div className="text-center">
       <p className="text-sm font-bold text-foreground leading-tight">{name}</p>
       <p className="text-xs text-muted-foreground leading-tight mt-1">{role}</p>
     </div>
@@ -45,7 +45,26 @@ const AdministrationPage = () => {
 
       <section className="py-20 md:py-24">
         <div className="mx-auto max-w-[1400px] px-5 md:px-12">
-          <div className="flex flex-wrap gap-0">
+          <div className="space-y-2 lg:hidden">
+            {administrationTabs.map((tab) => {
+              const isActive = activeTab === tab;
+              return (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={`w-full flex items-center justify-start px-5 py-4 text-left text-base sm:text-lg font-semibold border rounded-md transition ${
+                    isActive
+                      ? "bg-[hsl(var(--navy-deep))] text-white border-[hsl(var(--navy-deep))]"
+                      : "bg-secondary text-muted-foreground border-border hover:bg-secondary/70"
+                  }`}
+                >
+                  <span>{tab}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="hidden lg:flex flex-wrap gap-0">
             {administrationTabs.map((tab) => {
               const isActive = activeTab === tab;
               return (
@@ -75,18 +94,18 @@ const AdministrationPage = () => {
                   </div>
 
                   <div>
-                    <p className="text-sm md:text-base uppercase tracking-wide font-semibold text-muted-foreground">Chairman</p>
+                    <p className="text-sm md:text-base uppercase tracking-wide font-semibold text-muted-foreground">Vice-Chairman</p>
                     <p className="mt-2 text-xl md:text-2xl font-bold text-foreground">ATTY. DANILO L. CONCEPCION</p>
                   </div>
 
                   <div>
-                    <p className="text-sm md:text-base uppercase tracking-wide font-semibold text-muted-foreground">Vice-Chairman</p>
+                    <p className="text-sm md:text-base uppercase tracking-wide font-semibold text-muted-foreground">PLV President, Members</p>
                     <p className="mt-2 text-xl md:text-2xl font-bold text-foreground">DR. NEDEÑA C. TORRALBA</p>
                   </div>
 
                   <div>
                     <p className="text-sm md:text-base uppercase tracking-wide font-semibold text-muted-foreground">
-                      PLV President, Members
+                      Members
                     </p>
                     <ul className="mt-3 space-y-2 text-base md:text-lg text-foreground">
                       <li>REGENT LORENA C. NATIVIDAD-BORJA</li>
@@ -135,7 +154,20 @@ const AdministrationPage = () => {
                   College of Engineering and Information Technology
                 </p>
 
-                <div className="mt-12 overflow-x-auto pb-4">
+                <div className="mt-12 space-y-4 lg:hidden">
+                  <OrgNode name="Dr. Nedena C. Torralba" role="University President" />
+                  <OrgNode name="Dr. Michville Rivera" role="Vice President for Academic Affairs" />
+                  <OrgNode name="Engr. Jordan N. Velasco" role="Dean, College of CEIT" compact />
+                  <OrgNode name="Norie Caunda" role="Secretary, College of CEIT" compact />
+                  <OrgNode name="Engr. John Alvarado" role="Civil Engineering Department Chairperson" compact />
+                  <OrgNode name="Dr. Ana Santiago" role="Electrical Engineering Department Chairperson" compact />
+                  <OrgNode name="Mr. Ricardo Delacruz" role="Information Technology Department Chairperson" compact />
+                  <OrgNode name="Engr. Darryl John Bandino" role="CE Department Research Coordinator" compact />
+                  <OrgNode name="Engr. Erica Cruz" role="EE Department Research Coordinator" compact />
+                  <OrgNode name="Patrick Luan Francisco" role="IT Department Research Coordinator" compact />
+                </div>
+
+                <div className="mt-12 overflow-x-auto pb-4 hidden lg:block">
                   <div className="mx-auto min-w-[1040px]">
                     <OrgNode name="Dr. Nedena C. Torralba" role="University President" />
                     <div className="mx-auto h-10 w-px bg-border" />
