@@ -96,7 +96,7 @@ const Footer = () => {
                 className="group flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border border-white/30 bg-white/15 transition-colors hover:bg-white/30"
                 aria-label="PLV Facebook"
               >
-                <Image src="/PLV_Logo.png" alt="PLV Facebook" width={44} height={44} className="object-cover" />
+                <Image src="/PLV_LOGO.png" alt="PLV Facebook" width={44} height={44} className="object-cover" />
               </a>
             </div>
           </div>
