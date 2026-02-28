@@ -93,3 +93,9 @@
     font-family: "Inter", system-ui, sans-serif;
   }
 }
+
+@layer components {
+  .page-hero-gradient {
+    background-image: linear-gradient(to right, #f97316, #fb923c, #7c3aed);
+  }
+}

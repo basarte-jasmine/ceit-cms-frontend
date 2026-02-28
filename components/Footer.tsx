@@ -1,8 +1,7 @@
-import Link from "next/link";
 import Image from "next/image";
 import { Facebook } from "lucide-react";
 
-const updates = [
+const orgLinks = [
   {
     name: "Association of Civil Engineering Students",
     link: "https://www.facebook.com/plv.aces",
@@ -20,12 +19,12 @@ const updates = [
   },
 ];
 
-// Navbar pages
-const quickLinks = [
-  { to: "/", label: "Home" },
-  { to: "/academics", label: "Academics" },
-  { to: "/students", label: "Students" },
-  { to: "/news", label: "News" },
+const coreValues = [
+  "Academic Excellence",
+  "Integrity and Professional Leadership",
+  "Scholarly Research",
+  "Commitment to Service",
+  "Life Long Learning",
 ];
 
 const Footer = () => {
@@ -38,112 +37,70 @@ const Footer = () => {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_70%_35%,rgba(39,120,255,.18)_0,transparent_48%)]" />
       <div className="pointer-events-none absolute inset-0 opacity-25 bg-[linear-gradient(90deg,rgba(255,255,255,.05)_1px,transparent_1px)] bg-[size:100px_100%]" />
 
-      <div className="relative mx-auto max-w-[1480px] px-6 md:px-12 py-8">
-        <div className="grid gap-8 md:grid-cols-[1.1fr_1.8fr_.85fr]">
-          {/* Contact Section */}
-          <div className="border-r border-white/10 pr-6">
-            <div className="mb-4 flex items-start gap-3">
-              <Image
-                src="/PLV_Logo.png"
-                alt="PLV CEIT logo"
-                width={60}
-                height={60}
-                className="rounded-full"
-              />
-              <div>
-                <h4 className="text-[24px] font-bold leading-none text-[#ffd043]">
-                  Contact Us
-                </h4>
-
-                <a
-                  href="https://www.facebook.com/plv.aces"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-1 block text-[18px] font-semibold leading-tight text-white hover:text-[#ffd043] transition-colors"
-                >
-                  College Of Engineering And Information Technology
-                </a>
-              </div>
-            </div>
-
-            <div className="ml-[68px] space-y-1 text-[14px] text-white/80">
-              <p>Maysan Road corner</p>
-              <p>Tongco Street, Maysan,</p>
-              <p>Valenzuela City 1440</p>
-            </div>
-
-            <div className="ml-[68px] mt-3 flex items-center gap-2">
-              <a
-                href="https://www.facebook.com/PamantasanNgLungsodNgValenzuelaOfficialAccount"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded bg-white/15 p-3 text-white hover:bg-white/30 transition-colors"
-                aria-label="Facebook"
-              >
-                <Facebook className="h-4 w-4" />
-              </a>
-            </div>
-          </div>
-
-          {/* Follow Us Section */}
-          <div className="border-r border-white/10 pr-6">
-            <h4 className="mb-4 text-[24px] font-bold leading-none text-[#ffd043]">
-              Follow Us
-            </h4>
-
-            <div className="space-y-3">
-              {updates.map((item, index) => (
-                <a
-                  key={index}
-                  href={item.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center gap-4 rounded px-2 py-2 transition-colors hover:bg-white/10"
-                >
-                  {/* Organization Logo */}
-                  <div className="h-10 w-10 shrink-0 rounded-full overflow-hidden bg-white/20 border border-white/30 flex items-center justify-center">
-                    <Image
-                      src={item.image}
-                      alt={item.name}
-                      width={50}
-                      height={50}
-                      className="object-cover"
-                    />
-                  </div>
-
-                  <p className="text-[16px] leading-snug text-white/90 group-hover:text-white">
-                    {item.name}
-                  </p>
-                </a>
-              ))}
-            </div>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h4 className="mb-4 text-[24px] font-bold leading-none text-[#ffd043]">
-              Quick Links
-            </h4>
-
-            <ul className="space-y-2.5">
-              {quickLinks.map((item) => (
-                <li key={item.to} className="border-b border-white/20 pb-1.5">
-                  <Link
-                    href={item.to}
-                    className="text-[16px] text-white/90 transition-colors hover:text-[#ffd043]"
-                  >
-                    {item.label}
-                  </Link>
+      <div className="relative mx-auto max-w-[1480px] px-6 py-8 md:px-12">
+        <div className="grid gap-8 text-center md:grid-cols-2 lg:grid-cols-4">
+          <div className="p-2 lg:pr-8">
+            <h4 className="mb-3 text-[24px] font-bold leading-none text-[#ffd043]">Core Values</h4>
+            <ul className="space-y-2">
+              {coreValues.map((value) => (
+                <li key={value}>
+                  <p className="text-[15px] leading-relaxed text-white/85">{value}</p>
                 </li>
               ))}
             </ul>
           </div>
+
+          <div className="p-2 lg:border-l lg:border-white/20 lg:px-8">
+            <h4 className="mb-3 text-[24px] font-bold leading-none text-[#ffd043]">Vision</h4>
+            <p className="text-[15px] leading-relaxed text-white/85">
+              Aims to become the premiere institution of higher learning providing the city with competent and committed engineers and IT professionals that will help the development of the city of Valenzuela and the nation.
+            </p>
+          </div>
+
+          <div className="p-2 lg:border-l lg:border-white/20 lg:px-8">
+            <h4 className="mb-3 text-[24px] font-bold leading-none text-[#ffd043]">Mission</h4>
+            <p className="text-[15px] leading-relaxed text-white/85">
+            To develop the student of the city of Valenzuela into top caliber engineers and IT professionals who are proficient, committed and environmentally aware with good leadership skills that will comply with the needs of the city and the nation.
+            </p>
+          </div>
+
+          <div className="p-2 lg:border-l lg:border-white/20 lg:pl-8">
+            <h4 className="mb-3 text-[24px] font-bold leading-none text-[#ffd043]">Our Address</h4>
+            <p className="text-[15px] leading-relaxed text-white/85">
+              Maysan Road corner Tongco Street, Maysan,
+              <br />
+              Valenzuela City 1440
+            </p>
+
+            <div className="mt-4 flex flex-wrap justify-center gap-3">
+              {orgLinks.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border border-white/30 bg-white/15 transition-colors hover:bg-white/30"
+                  aria-label={item.name}
+                >
+                  <Image src={item.image} alt={item.name} width={44} height={44} className="object-cover" />
+                </a>
+              ))}
+              <a
+                href="https://www.facebook.com/PamantasanNgLungsodNgValenzuelaOfficialAccount"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-12 w-12 items-center justify-center rounded-full border border-white/30 bg-white/15 text-white transition-colors hover:bg-white/30"
+                aria-label="PLV Facebook"
+              >
+                <Facebook className="h-5 w-5" />
+              </a>
+            </div>
+          </div>
         </div>
 
-        <div className="mt-7 border-t border-white/20 pt-2">
-          <p className="text-[12px] text-white/70">
-            © 2026 Copyright. All rights reserved.
-          </p>
+        <div className="mt-8 flex flex-col items-center gap-3 border-t border-white/20 pt-6">
+          <p className="text-center text-[12px] text-[#ffd043]">COLLEGE OF ENGINEERING AND INFORMATION TECHNOLOGY</p>
+          <p className="text-center text-[12px] text-white/70">© 2026 Pamantasan ng Lungsod ng Valenzuela. All rights reserved.</p>
         </div>
       </div>
     </footer>
