@@ -324,20 +324,6 @@ const Academics = () => {
                   </div>
 
                   <div>
-                    <h4 className="text-xl md:text-2xl font-bold text-foreground">Curriculum / Focus Areas</h4>
-                    <ul className="mt-3 space-y-2 text-base md:text-lg text-muted-foreground">
-                      {currentProgram.focusAreas.map((item) => (
-                        <li key={item.title} className="flex items-start gap-3">
-                          <Check className="w-5 h-5 text-[#ef8a22] flex-shrink-0 mt-1" />
-                          <span>
-                            <span className="font-semibold text-foreground">{item.title}:</span> {item.detail}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div>
                     <h4 className="text-xl md:text-2xl font-bold text-foreground">Career Opportunities</h4>
                     <ul className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-2 text-base md:text-lg text-muted-foreground">
                       {currentProgram.careers.map((career) => (

@@ -1,22 +1,28 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 type OrgNodeProps = {
   name: string;
   role: string;
+  image?: string;
   compact?: boolean;
 };
 
-const OrgNode = ({ name, role, compact = false }: OrgNodeProps) => (
+const OrgNode = ({ name, role, image, compact = false }: OrgNodeProps) => (
   <div
     className={[
       "mx-auto flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 shadow-sm",
       compact ? "w-[250px] sm:w-[280px] md:w-[300px]" : "w-[280px] sm:w-[320px] md:w-[360px]",
     ].join(" ")}
   >
-    <div className="flex h-12 w-12 md:h-14 md:w-14 flex-shrink-0 items-center justify-center rounded-full border border-border bg-muted text-[10px] md:text-[11px] font-semibold text-muted-foreground">
-      Image
+    <div className="relative flex h-12 w-12 md:h-14 md:w-14 flex-shrink-0 items-center justify-center overflow-hidden rounded-full border border-border bg-muted text-[10px] md:text-[11px] font-semibold text-muted-foreground">
+      {image ? (
+        <Image src={image} alt={name} fill className="object-cover" />
+      ) : (
+        "Image"
+      )}
     </div>
     <div className="text-center">
       <p className="text-sm font-bold text-foreground leading-tight">{name}</p>
@@ -155,29 +161,32 @@ const AdministrationPage = () => {
                 </p>
 
                 <div className="mt-12 space-y-4 lg:hidden">
-                  <OrgNode name="Dr. Nedena C. Torralba" role="University President" />
-                  <OrgNode name="Dr. Michville Rivera" role="Vice President for Academic Affairs" />
-                  <OrgNode name="Engr. Jordan N. Velasco" role="Dean, College of CEIT" compact />
-                  <OrgNode name="Norie Caunda" role="Secretary, College of CEIT" compact />
-                  <OrgNode name="Engr. John Alvarado" role="Civil Engineering Department Chairperson" compact />
-                  <OrgNode name="Dr. Ana Santiago" role="Electrical Engineering Department Chairperson" compact />
-                  <OrgNode name="Mr. Ricardo Delacruz" role="Information Technology Department Chairperson" compact />
-                  <OrgNode name="Engr. Darryl John Bandino" role="CE Department Research Coordinator" compact />
-                  <OrgNode name="Engr. Erica Cruz" role="EE Department Research Coordinator" compact />
-                  <OrgNode name="Patrick Luan Francisco" role="IT Department Research Coordinator" compact />
+                  <OrgNode name="Dr. Nedena C. Torralba" role="University President" image="/pres_torralba.png" />
+                  <OrgNode name="Dr. Michville Rivera" role="Vice President for Academic Affairs" image="/vpaa_rivera.png" />
+                  <OrgNode name="Engr. Jordan N. Velasco" role="Dean, College of CEIT" image="/engr_jordan-velasco.png" compact />
+                  <OrgNode name="Norie Caunda" role="Secretary, College of CEIT" image="/norie_caunda.png" compact />
+                  <OrgNode name="Engr. Tirao" role="Civil Engineering Department Chairperson" image="/engr_tirao.png" compact />
+                  <OrgNode name="Alex Montano" role="Electrical Engineering Department Chairperson" image="/alex_monstano.png" compact />
+                  <OrgNode name="Kenmar Bernardino" role="Information Technology Department Chairperson" image="/kenmar_bernardino.png" compact />
+                  <OrgNode name="Engr. Darryl John Bandino" role="CE Department Research Coordinator" image="/john-bandino.png" compact />
+                  <OrgNode name="Engr. Erica Cruz" role="EE Department Research Coordinator" image="/erika_cruz.png" compact />
+                  <OrgNode name="Patrick Luan Francisco" role="IT Department Research Coordinator" image="/patrick_francisco.png" compact />
                 </div>
 
                 <div className="mt-12 overflow-x-auto pb-4 hidden lg:block">
                   <div className="mx-auto min-w-[1040px]">
-                    <OrgNode name="Dr. Nedena C. Torralba" role="University President" />
+                    <OrgNode name="Dr. Nedena C. Torralba" role="University President" image="/pres_torralba.png" />
                     <div className="mx-auto h-10 w-px bg-border" />
 
-                    <OrgNode name="Dr. Michville Rivera" role="Vice President for Academic Affairs" />
+                    <OrgNode name="Dr. Michville Rivera" role="Vice President for Academic Affairs" image="/vpaa_rivera.png" />
                     <div className="mx-auto h-10 w-px bg-border" />
 
-                    <div className="flex items-center justify-center gap-6">
-                      <OrgNode name="Engr. Jordan N. Velasco" role="Dean, College of CEIT" compact />
-                      <OrgNode name="Norie Caunda" role="Secretary, College of CEIT" compact />
+                    <div className="relative mx-auto w-[620px]">
+                      <div className="absolute left-1/2 top-1/2 h-px w-[360px] -translate-x-1/2 -translate-y-1/2 bg-border" />
+                      <div className="relative flex items-center justify-center gap-6">
+                        <OrgNode name="Engr. Jordan N. Velasco" role="Dean, College of CEIT" image="/engr_jordan-velasco.png" compact />
+                        <OrgNode name="Norie Caunda" role="Secretary, College of CEIT" image="/norie_caunda.png" compact />
+                      </div>
                     </div>
 
                     <div className="mx-auto h-8 w-px bg-border" />
@@ -190,9 +199,9 @@ const AdministrationPage = () => {
                     </div>
 
                     <div className="flex justify-center gap-10">
-                      <OrgNode name="Engr. John Alvarado" role="Civil Engineering Department Chairperson" compact />
-                      <OrgNode name="Dr. Ana Santiago" role="Electrical Engineering Department Chairperson" compact />
-                      <OrgNode name="Mr. Ricardo Delacruz" role="Information Technology Department Chairperson" compact />
+                      <OrgNode name="Engr. Tirao" role="Civil Engineering Department Chairperson" image="/engr_tirao.png" compact />
+                      <OrgNode name="Alex Montano" role="Electrical Engineering Department Chairperson" image="/alex_monstano.png" compact />
+                      <OrgNode name="Kenmar Bernardino" role="Information Technology Department Chairperson" image="/kenmar_bernardino.png" compact />
                     </div>
 
                     <div className="mx-auto mt-2 mb-2 flex w-[980px] justify-between px-[100px]">
@@ -202,9 +211,9 @@ const AdministrationPage = () => {
                     </div>
 
                     <div className="flex justify-center gap-10">
-                      <OrgNode name="Engr. Darryl John Bandino" role="CE Department Research Coordinator" compact />
-                      <OrgNode name="Engr. Erica Cruz" role="EE Department Research Coordinator" compact />
-                      <OrgNode name="Patrick Luan Francisco" role="IT Department Research Coordinator" compact />
+                      <OrgNode name="Engr. Darryl John Bandino" role="CE Department Research Coordinator" image="/john-bandino.png" compact />
+                      <OrgNode name="Engr. Erica Cruz" role="EE Department Research Coordinator" image="/erika_cruz.png" compact />
+                      <OrgNode name="Patrick Luan Francisco" role="IT Department Research Coordinator" image="/patrick_francisco.png" compact />
                     </div>
                   </div>
                 </div>
