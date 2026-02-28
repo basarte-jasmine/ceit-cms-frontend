@@ -213,7 +213,7 @@ const AdministrationPage = () => {
                     <div className="flex justify-center gap-10">
                       <OrgNode name="Engr. Darryl John Bandino" role="CE Department Research Coordinator" image="/john-bandino.png" compact />
                       <OrgNode name="Engr. Erica Cruz" role="EE Department Research Coordinator" image="/erika_cruz.png" compact />
-                      <OrgNode name="Patrick Luan Francisco" role="IT Department Research Coordinator" image="/patrick_francisco.png" compact />
+                      <OrgNode name="Patrick Luis Francisco" role="IT Department Research Coordinator" image="/patrick_francisco.png" compact />
                     </div>
                   </div>
                 </div>
