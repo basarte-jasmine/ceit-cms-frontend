@@ -82,54 +82,60 @@ export const facilities: FacilityItem[] = [
     slug: "ceit-building",
     title: "CEIT Building",
     image: "/ceitbuilding.jpg",
-    shortDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    shortDescription:
+      "Main academic facility that houses classrooms, laboratories, and student support spaces.",
     fullDescription:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      "The CEIT Building serves as the primary venue for engineering and IT classes, laboratory activities, and selected student services.",
     galleryImages: ["/ceitbuilding.jpg", "/ce_exCElling-towards-the-future.png"],
   },
   {
     slug: "fifth-floor-classroom",
     title: "Classroom",
     image: "/5thfloorclassroom.jpg",
-    shortDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    shortDescription:
+      "General classroom space used for lectures, discussions, and course-based activities.",
     fullDescription:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      "This classroom supports regular instruction for undergraduate courses and can be configured for lecture and collaborative learning sessions.",
     galleryImages: ["/5thfloorclassroom.jpg"],
   },
   {
     slug: "lecture-hall",
     title: "Lecture Hall",
     image: "/lecture hall.jpg",
-    shortDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    shortDescription:
+      "Large-capacity hall for lectures, seminars, orientations, and academic events.",
     fullDescription:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      "The lecture hall is used for classes and college-wide presentations that require a larger audience setup. Seating, projection, and audio support are available depending on event requirements.",
     galleryImages: ["/lecture hall.jpg", "/lecturelab.jpg"],
   },
   {
     slug: "ceit-library",
     title: "CEIT Library",
     image: "/library_ceit.jpg",
-    shortDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    shortDescription:
+      "Learning resource space for references, study sessions, and quiet academic work.",
     fullDescription:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      "The CEIT Library provides students with access to course references and a study-friendly environment for individual or small-group academic work.",
     galleryImages: ["/library_ceit.jpg"],
   },
   {
     slug: "quality-assurance-lab",
     title: "Quality Assurance Lab",
     image: "/quality_assurance_lab.jpg",
-    shortDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    shortDescription:
+      "Dedicated space for quality checks, documentation activities, and process support.",
     fullDescription:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      "The Quality Assurance Lab supports accreditation and quality-related activities, including documentation, review sessions, and process coordination.",
     galleryImages: ["/quality_assurance_lab.jpg"],
   },
   {
     slug: "quiet-study-room",
     title: "Quiet Study Room",
     image: "/quiet study room.jpg",
-    shortDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    shortDescription:
+      "Low-noise study room designed for focused reading, review, and academic preparation.",
     fullDescription:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      "The Quiet Study Room is intended for students who need a calm environment for concentrated work. It is commonly used for self-study, exam preparation, and individual research.",
     galleryImages: ["/quiet study room.jpg", "/studyroom.jpg", "/collab1.jpg"],
   },
 ];
