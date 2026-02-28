@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { Shield, BookOpen, Briefcase, Heart, MessageCircle } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Shield, BookOpen, Briefcase, Heart, MessageCircle, ChevronLeft, ChevronRight } from "lucide-react";
 
 type DepartmentKey = "EE" | "IT" | "CE";
 
@@ -30,8 +31,8 @@ const departments: Record<
       "The Valenzuela Information Technology Society (VITS) was founded in 2011 within the Department of Information Technology at Pamantasan ng Lungsod ng Valenzuela. The organization was established to unify the voices of Information Technology students. VITS aims to build strong camaraderie among the members and to strengthen the foundation of Information Technology students at PLV. Additionally, VITS serves as a representation of the PLV student body, conveying the needs and grievances of its members.",
     image: "/IT_studentlife.jpg",
     socialLinks: [
-      { label: "VITS Page", url: "https://www.facebook.com/plv.aces" },
-      { label: "VITS ITlympics Page", url: "https://www.instagram.com/plv.aces" },
+      { label: "VITS Page", url: "https://www.facebook.com/ValenzuelaITSociety" },
+      { label: "VITS ITlympics Page", url: "https://www.facebook.com/PLVVITSITLympics" },
     ],
   },
   CE: {
@@ -84,14 +85,83 @@ const nstpPrograms = [
 
 export default function Students() {
   const departmentOrder: DepartmentKey[] = ["CE", "EE", "IT"];
+  const headerSlides = [
+    "/aces1.jpg",
+    "/aees1.jpg",
+    "/vits1.jpg",
+    "/aces2.jpg",
+    "/aees2.jpg",
+    "/vits2.jpg",
+    "/aces3.jpg",
+    "/aees3.jpg",
+    "/vits3.jpg",
+  ];
+  const [currentHeaderSlide, setCurrentHeaderSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentHeaderSlide((prev) => (prev + 1) % headerSlides.length);
+    }, 3500);
+
+    return () => clearInterval(timer);
+  }, [headerSlides.length]);
+
+  const prevHeaderSlide = () => {
+    setCurrentHeaderSlide((prev) => (prev - 1 + headerSlides.length) % headerSlides.length);
+  };
+
+  const nextHeaderSlide = () => {
+    setCurrentHeaderSlide((prev) => (prev + 1) % headerSlides.length);
+  };
 
   return (
     <div className="min-h-screen bg-[#f2f4fb]">
-      <section className="relative h-[260px] md:h-[320px] overflow-hidden">
-        <Image src="/banner_students.png" alt="Student life banner" fill className="object-cover" />
-        <div className="absolute inset-0 bg-[#0e1b3d]/45" />
+      <section className="relative h-[440px] md:h-[560px] overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden">
+          <div
+            className="flex h-full transition-transform duration-700 ease-in-out"
+            style={{ transform: `translateX(-${currentHeaderSlide * 100}%)` }}
+          >
+            {headerSlides.map((slide) => (
+              <div key={slide} className="relative h-full min-w-full">
+                <Image src={slide} alt="Student life banner" fill className="object-cover" />
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/35 to-black/15" />
+
+        <button
+          onClick={prevHeaderSlide}
+          type="button"
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-20 rounded-full bg-white/25 p-2 text-white transition-colors hover:bg-white/35"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft className="h-6 w-6" />
+        </button>
+
+        <button
+          onClick={nextHeaderSlide}
+          type="button"
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-20 rounded-full bg-white/25 p-2 text-white transition-colors hover:bg-white/35"
+          aria-label="Next slide"
+        >
+          <ChevronRight className="h-6 w-6" />
+        </button>
+
+        <div className="absolute bottom-6 left-1/2 z-20 flex -translate-x-1/2 gap-2.5">
+          {headerSlides.map((_, index) => (
+            <button
+              key={index}
+              type="button"
+              onClick={() => setCurrentHeaderSlide(index)}
+              className={`h-3 w-3 rounded-full transition-colors ${index === currentHeaderSlide ? "bg-[#ef8a22]" : "bg-white/45"}`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
         <div className="relative z-10 mx-auto flex h-full max-w-[1400px] items-center px-5 md:px-12">
-          <div>
+          <div className="max-w-3xl">
             <h1 className="text-5xl md:text-6xl font-extrabold text-white">Students</h1>
             <p className="mt-5 max-w-3xl text-base md:text-lg text-white/90 leading-relaxed">
               Explore student organizations, support services, and programs that enrich campus life and help learners thrive.
