@@ -170,7 +170,7 @@ const AdministrationPage = () => {
                   <OrgNode name="Kenmar Bernardino" role="Information Technology Department Chairperson" image="/kenmar_bernardino.png" compact />
                   <OrgNode name="Engr. Darryl John Bandino" role="CE Department Research Coordinator" image="/john-bandino.png" compact />
                   <OrgNode name="Engr. Erica Cruz" role="EE Department Research Coordinator" image="/erika_cruz.png" compact />
-                  <OrgNode name="Patrick Luan Francisco" role="IT Department Research Coordinator" image="/patrick_francisco.png" compact />
+                  <OrgNode name="Patrick Luis Francisco" role="IT Department Research Coordinator" image="/patrick_francisco.png" compact />
                 </div>
 
                 <div className="mt-12 overflow-x-auto pb-4 hidden lg:block">
