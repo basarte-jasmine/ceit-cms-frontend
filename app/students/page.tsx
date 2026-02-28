@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
 import { Shield, BookOpen, Briefcase, Heart, MessageCircle } from "lucide-react";
 
 type DepartmentKey = "EE" | "IT" | "CE";
@@ -84,8 +83,7 @@ const nstpPrograms = [
 ];
 
 export default function Students() {
-  const [activeDepartment, setActiveDepartment] = useState<DepartmentKey>("CE");
-  const currentDepartment = departments[activeDepartment];
+  const departmentOrder: DepartmentKey[] = ["CE", "EE", "IT"];
 
   return (
     <div className="min-h-screen bg-[#f2f4fb]">
@@ -102,51 +100,42 @@ export default function Students() {
         </div>
       </section>
 
-      <section className="mx-auto -mt-10 md:-mt-12 max-w-[1200px] px-5 md:px-8 relative z-10">
-        <div className="rounded-2xl bg-white border border-[#dfe3ef] shadow-sm p-7 md:p-10 grid md:grid-cols-2 gap-8 items-center md:min-h-[500px]">
-          <div className="flex h-full flex-col">
-            <h2 className="text-3xl font-bold text-[#1f2b55] leading-tight">{currentDepartment.title}</h2>
+      <section className="mx-auto mt-10 md:mt-12 max-w-[1200px] px-5 md:px-8 relative z-10">
+        <div className="px-2 md:px-0">
+          <div className="space-y-7">
+            {departmentOrder.map((key, index) => {
+              const department = departments[key];
+              const isReverse = index % 2 === 1;
 
-            <div className="mt-4 min-h-[185px] md:min-h-[210px]">
-              <p className="text-[#4e5a7b] leading-relaxed">{currentDepartment.description}</p>
-            </div>
+              return (
+                <div key={key} className="pb-7 border-b border-[#dfe3ef] last:border-b-0 last:pb-0">
+                  <div className={`grid gap-6 items-center md:grid-cols-2 ${isReverse ? "md:[&>*:first-child]:order-2" : ""}`}>
+                    <div className="flex h-full flex-col">
+                      <h2 className="text-3xl font-bold text-[#1f2b55] leading-tight">{department.title}</h2>
+                      <p className="mt-4 text-[#4e5a7b] leading-relaxed">{department.description}</p>
 
-            <div className="mt-4 flex flex-wrap gap-3">
-              {currentDepartment.socialLinks.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.url}
-                  target={link.url.startsWith("http") ? "_blank" : undefined}
-                  rel={link.url.startsWith("http") ? "noopener noreferrer" : undefined}
-                  className="text-sm font-semibold text-[#0f8d83] hover:underline"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </div>
+                      <div className="mt-4 flex flex-wrap gap-3">
+                        {department.socialLinks.map((link) => (
+                          <a
+                            key={link.label}
+                            href={link.url}
+                            target={link.url.startsWith("http") ? "_blank" : undefined}
+                            rel={link.url.startsWith("http") ? "noopener noreferrer" : undefined}
+                            className="text-sm font-semibold text-[#0f8d83] hover:underline"
+                          >
+                            {link.label}
+                          </a>
+                        ))}
+                      </div>
+                    </div>
 
-            <div className="mt-6 flex gap-2">
-              {(["CE", "EE", "IT"] as DepartmentKey[]).map((key) => {
-                const active = activeDepartment === key;
-                return (
-                  <button
-                    key={key}
-                    onClick={() => setActiveDepartment(key)}
-                    className={`inline-flex h-10 w-14 items-center justify-center rounded-md border text-sm font-semibold transition ${
-                      active
-                        ? "bg-[#0f8d83] text-white border-[#0f8d83]"
-                        : "bg-[#f1f3f9] text-[#33405f] border-[#d6dbea] hover:bg-[#e8ecf7]"
-                    }`}
-                  >
-                    {key}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          <div className="relative h-[260px] md:h-[360px] w-full rounded-xl overflow-hidden bg-[#e8ecf7] border border-[#dfe3ef]">
-            <Image src={currentDepartment.image} alt={currentDepartment.title} fill className="object-cover" />
+                    <div className="relative h-[260px] md:h-[360px] w-full rounded-xl overflow-hidden bg-[#e8ecf7] border border-[#dfe3ef]">
+                      <Image src={department.image} alt={department.title} fill className="object-cover" />
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>

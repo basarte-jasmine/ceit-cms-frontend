@@ -76,7 +76,19 @@ const Footer = () => {
               Valenzuela City 1440
             </p>
 
-            <div className="mt-4 flex flex-wrap justify-center gap-3">
+            <div className="mt-4 flex justify-center">
+              <a
+                href="https://www.facebook.com/PamantasanNgLungsodNgValenzuelaOfficialAccount"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex h-14 w-14 items-center justify-center overflow-hidden rounded-full border border-white/30 bg-white/15 transition-colors hover:bg-white/30"
+                aria-label="PLV Facebook"
+              >
+                <Image src="/PLV_LOGO.png" alt="PLV Facebook" width={52} height={52} className="object-cover" />
+              </a>
+            </div>
+
+            <div className="mt-3 flex flex-wrap justify-center gap-3">
               {orgLinks.map((item) => (
                 <a
                   key={item.name}
@@ -89,15 +101,6 @@ const Footer = () => {
                   <Image src={item.image} alt={item.name} width={44} height={44} className="object-cover" />
                 </a>
               ))}
-              <a
-                href="https://www.facebook.com/PamantasanNgLungsodNgValenzuelaOfficialAccount"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border border-white/30 bg-white/15 transition-colors hover:bg-white/30"
-                aria-label="PLV Facebook"
-              >
-                <Image src="/PLV_LOGO.png" alt="PLV Facebook" width={44} height={44} className="object-cover" />
-              </a>
             </div>
           </div>
         </div>
