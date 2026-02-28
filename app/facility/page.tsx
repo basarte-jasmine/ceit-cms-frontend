@@ -6,10 +6,14 @@ import { facilities } from "@/lib/facilities";
 const FacilityPage = () => {
   return (
     <div className="min-h-screen bg-background">
-      <section className="border-b border-border page-hero-gradient py-14 md:py-16">
+      <section
+        className="relative overflow-hidden border-b border-border py-14 md:py-16 bg-cover bg-center"
+        style={{ backgroundImage: "url('/banner_facility.png')" }}
+      >
+        <div className="absolute inset-0 bg-[hsl(var(--navy-deep))/0.55]" />
         <div className="mx-auto max-w-[1400px] px-5 md:px-12">
-          <h1 className="text-5xl md:text-6xl font-extrabold text-white">Facility</h1>
-          <p className="mt-5 max-w-3xl text-base md:text-lg text-white/90 leading-relaxed">
+          <h1 className="relative text-5xl md:text-6xl font-extrabold text-white">Facility</h1>
+          <p className="relative mt-5 max-w-3xl text-base md:text-lg text-white/90 leading-relaxed">
             Explore CEIT rooms and support spaces. Click a facility card to open a full view with complete details.
           </p>
         </div>

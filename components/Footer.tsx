@@ -71,33 +71,34 @@ const Footer = () => {
               <br />
               Valenzuela City 1440
             </p>
+
+            <div className="mt-4 flex flex-wrap justify-center gap-3">
+              {orgLinks.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border border-white/30 bg-white/15 transition-colors hover:bg-white/30"
+                  aria-label={item.name}
+                >
+                  <Image src={item.image} alt={item.name} width={44} height={44} className="object-cover" />
+                </a>
+              ))}
+              <a
+                href="https://www.facebook.com/PamantasanNgLungsodNgValenzuelaOfficialAccount"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-12 w-12 items-center justify-center rounded-full border border-white/30 bg-white/15 text-white transition-colors hover:bg-white/30"
+                aria-label="PLV Facebook"
+              >
+                <Facebook className="h-5 w-5" />
+              </a>
+            </div>
           </div>
         </div>
 
         <div className="mt-8 flex flex-col items-center gap-3 border-t border-white/20 pt-6">
-          <div className="flex flex-wrap justify-center gap-3">
-            {orgLinks.map((item) => (
-              <a
-                key={item.name}
-                href={item.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border border-white/30 bg-white/15 transition-colors hover:bg-white/30"
-                aria-label={item.name}
-              >
-                <Image src={item.image} alt={item.name} width={44} height={44} className="object-cover" />
-              </a>
-            ))}
-            <a
-              href="https://www.facebook.com/PamantasanNgLungsodNgValenzuelaOfficialAccount"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex h-12 w-12 items-center justify-center rounded-full border border-white/30 bg-white/15 text-white transition-colors hover:bg-white/30"
-              aria-label="PLV Facebook"
-            >
-              <Facebook className="h-5 w-5" />
-            </a>
-          </div>
           <p className="text-center text-[12px] text-[#ffd043]">COLLEGE OF ENGINEERING AND INFORMATION TECHNOLOGY</p>
           <p className="text-center text-[12px] text-white/70">© 2026 Pamantasan ng Lungsod ng Valenzuela. All rights reserved.</p>
         </div>
