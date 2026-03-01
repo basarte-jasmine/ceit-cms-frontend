@@ -202,6 +202,22 @@ export default function Index() {
                   </Link>
 
                   <div className="relative overflow-hidden px-5 py-6 md:px-6 md:py-5 flex flex-col justify-center h-full bg-[linear-gradient(135deg,#ffffff_0%,#f7f9ff_46%,#e9eefc_100%)]">
+                    <div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute right-0 top-0 h-36 w-44 rounded-bl-[72px] bg-[linear-gradient(145deg,rgba(255,176,77,0.44)_0%,rgba(243,125,36,0.26)_58%,rgba(243,125,36,0.06)_100%)]"
+                    />
+                    <div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute right-6 top-5 h-20 w-20 rounded-full border border-[#f2a65f]/35"
+                    />
+                    <div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute right-10 top-9 h-12 w-12 rounded-full border border-[#f2a65f]/25"
+                    />
+                    <div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute right-2 top-0 h-24 w-24 rounded-full bg-[radial-gradient(circle,rgba(255,173,87,0.26)_0%,rgba(255,173,87,0)_70%)] blur-md"
+                    />
                     <p className="relative z-10 text-[11px] tracking-[0.16em] uppercase font-bold text-amber-500 mb-2">Campus Facility</p>
                     <h2 className="relative z-10 text-3xl md:text-[40px] font-black text-[#111f3f] leading-[0.98] mb-3 line-clamp-2 min-h-[3.5rem] md:min-h-[5rem]">
                       <Link href={activeFacility ? `/facility/${activeFacility.slug}` : "/facility"}>
