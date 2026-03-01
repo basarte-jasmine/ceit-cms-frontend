@@ -83,20 +83,22 @@ export default function CurriculumPage() {
                   <button
                     key={code}
                     onClick={() => setActiveProgram(code)}
-                    className={`px-6 py-3 text-sm md:text-base font-semibold border transition ${
+                    className={`px-6 py-3 text-sm md:text-base font-semibold border transition subtab-hover-btn ${
                       isActive
-                        ? "bg-[hsl(var(--navy-deep))] text-white border-[hsl(var(--navy-deep))]"
-                        : "bg-secondary text-muted-foreground border-border hover:bg-secondary/70"
+                        ? "bg-[hsl(var(--navy-deep))] text-accent border-[hsl(var(--navy-deep))] subtab-active"
+                        : "bg-secondary text-muted-foreground border-border"
                     }`}
                   >
-                    {code}
+                    <span className="subtab-hover-label">
+                      {code}
+                    </span>
                   </button>
                 );
               })}
             </div>
           </div>
 
-          <div className="mt-6 rounded-lg border border-border bg-background p-6 md:p-8 space-y-6">
+          <div key={activeProgram} className="mt-6 rounded-lg border border-border bg-background p-6 md:p-8 space-y-6 tab-switch-reveal">
             <div>
               <h2 className="text-2xl md:text-3xl font-bold text-foreground">{currentProgram.name}</h2>
               <div className="mt-3 space-y-4">

@@ -64,7 +64,7 @@ const Navbar = () => {
   return (
     <nav
       className={[
-        "sticky top-0 z-50 bg-background border-b border-border",
+        "sticky top-0 z-[90] bg-background border-b border-border",
         "transition-transform duration-300 ease-in-out",
         isHidden ? "-translate-y-full" : "translate-y-0",
       ].join(" ")}
@@ -120,10 +120,10 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       <div
-        className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+        className={`md:hidden absolute top-full left-0 right-0 z-[100] overflow-hidden bg-background border-b border-border shadow-md transition-all duration-300 ease-in-out ${
           mobileMenuOpen
-            ? "max-h-80 opacity-100 border-t border-border"
-            : "max-h-0 opacity-0 border-t border-transparent"
+            ? "max-h-80 opacity-100 pointer-events-auto"
+            : "max-h-0 opacity-0 pointer-events-none"
         }`}
       >
         <div

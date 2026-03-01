@@ -101,6 +101,72 @@
 }
 
 @layer utilities {
+  @keyframes section-reveal {
+    from {
+      opacity: 0.3;
+      transform: translateY(2rem) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .tab-switch-reveal {
+    animation: section-reveal 700ms ease-out both;
+  }
+
+  .subtab-hover-btn {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    transition: color 300ms ease;
+  }
+
+  .subtab-hover-btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    width: 0;
+    opacity: 0;
+    background: hsl(var(--accent) / 0.22);
+    transition: width 320ms ease, opacity 320ms ease;
+  }
+
+  .subtab-hover-btn:hover::before {
+    width: 100%;
+    opacity: 1;
+  }
+
+  .subtab-hover-btn:hover {
+    color: hsl(var(--accent));
+  }
+
+  .subtab-hover-label {
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+    transition: transform 300ms ease;
+  }
+
+  .subtab-hover-btn:hover .subtab-hover-label {
+    transform: scale(1.05);
+  }
+
+  .subtab-hover-btn.subtab-active::before {
+    display: none;
+  }
+
+  .subtab-hover-btn.subtab-active:hover {
+    color: inherit;
+  }
+
+  .subtab-hover-btn.subtab-active:hover .subtab-hover-label {
+    transform: none;
+  }
+
   @keyframes logo-float {
     0%,
     100% {

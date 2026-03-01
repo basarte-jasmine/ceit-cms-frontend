@@ -58,13 +58,13 @@ const AdministrationPage = () => {
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
-                  className={`w-full flex items-center justify-start px-5 py-4 text-left text-base sm:text-lg font-semibold border rounded-md transition ${
+                  className={`w-full flex items-center justify-start px-5 py-4 text-left text-base sm:text-lg font-semibold border rounded-md transition subtab-hover-btn ${
                     isActive
-                      ? "bg-[hsl(var(--navy-deep))] text-white border-[hsl(var(--navy-deep))]"
-                      : "bg-secondary text-muted-foreground border-border hover:bg-secondary/70"
+                      ? "bg-[hsl(var(--navy-deep))] text-accent border-[hsl(var(--navy-deep))] subtab-active"
+                      : "bg-secondary text-muted-foreground border-border"
                   }`}
                 >
-                  <span>{tab}</span>
+                  <span className="subtab-hover-label">{tab}</span>
                 </button>
               );
             })}
@@ -77,13 +77,13 @@ const AdministrationPage = () => {
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
-                  className={`px-6 py-3 text-sm md:text-base font-semibold border transition ${
+                  className={`px-6 py-3 text-sm md:text-base font-semibold border transition subtab-hover-btn ${
                     isActive
-                      ? "bg-[hsl(var(--navy-deep))] text-white border-[hsl(var(--navy-deep))]"
-                      : "bg-secondary text-muted-foreground border-border hover:bg-secondary/70"
+                      ? "bg-[hsl(var(--navy-deep))] text-accent border-[hsl(var(--navy-deep))] subtab-active"
+                      : "bg-secondary text-muted-foreground border-border"
                   }`}
                 >
-                  {tab}
+                  <span className="subtab-hover-label">{tab}</span>
                 </button>
               );
             })}

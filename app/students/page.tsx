@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Shield, BookOpen, Briefcase, Heart, MessageCircle, ChevronLeft, ChevronRight } from "lucide-react";
 
 type DepartmentKey = "EE" | "IT" | "CE";
@@ -97,6 +97,16 @@ export default function Students() {
     "/vits3.jpg",
   ];
   const [currentHeaderSlide, setCurrentHeaderSlide] = useState(0);
+  const [visibleSections, setVisibleSections] = useState({
+    hero: false,
+    organizations: false,
+    guidance: false,
+    nstp: false,
+  });
+  const heroRef = useRef<HTMLElement | null>(null);
+  const organizationsRef = useRef<HTMLElement | null>(null);
+  const guidanceRef = useRef<HTMLElement | null>(null);
+  const nstpRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -106,6 +116,53 @@ export default function Students() {
     return () => clearInterval(timer);
   }, [headerSlides.length]);
 
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+      setVisibleSections({
+        hero: true,
+        organizations: true,
+        guidance: true,
+        nstp: true,
+      });
+      return;
+    }
+
+    const entries: Array<{
+      key: keyof typeof visibleSections;
+      element: HTMLElement | null;
+    }> = [
+      { key: "hero", element: heroRef.current },
+      { key: "organizations", element: organizationsRef.current },
+      { key: "guidance", element: guidanceRef.current },
+      { key: "nstp", element: nstpRef.current },
+    ];
+
+    const observer = new IntersectionObserver(
+      (observerEntries, obs) => {
+        observerEntries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const key = entry.target.getAttribute("data-section-key") as keyof typeof visibleSections | null;
+          if (!key) return;
+          setVisibleSections((prev) => ({ ...prev, [key]: true }));
+          obs.unobserve(entry.target);
+        });
+      },
+      {
+        threshold: 0.2,
+        rootMargin: "0px 0px -8% 0px",
+      },
+    );
+
+    entries.forEach(({ key, element }) => {
+      if (!element) return;
+      element.setAttribute("data-section-key", key);
+      observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   const prevHeaderSlide = () => {
     setCurrentHeaderSlide((prev) => (prev - 1 + headerSlides.length) % headerSlides.length);
   };
@@ -114,9 +171,12 @@ export default function Students() {
     setCurrentHeaderSlide((prev) => (prev + 1) % headerSlides.length);
   };
 
+  const revealClass = (visible: boolean) =>
+    `transform-gpu transition-all duration-700 ease-out ${visible ? "opacity-100 translate-y-0 scale-100" : "opacity-30 translate-y-8 scale-95"}`;
+
   return (
     <div className="min-h-screen bg-[#f2f4fb]">
-      <section className="relative h-[440px] md:h-[560px] overflow-hidden">
+      <section ref={heroRef} className={`relative h-[440px] md:h-[560px] overflow-hidden ${revealClass(visibleSections.hero)}`}>
         <div className="absolute inset-0 overflow-hidden">
           <div
             className="flex h-full transition-transform duration-700 ease-in-out"
@@ -170,7 +230,7 @@ export default function Students() {
         </div>
       </section>
 
-      <section className="mx-auto mt-10 md:mt-12 max-w-[1200px] px-5 md:px-8 relative z-10">
+      <section ref={organizationsRef} className={`mx-auto mt-10 md:mt-12 max-w-[1200px] px-5 md:px-8 relative z-10 ${revealClass(visibleSections.organizations)}`}>
         <div className="px-2 md:px-0">
           <div className="space-y-7">
             {departmentOrder.map((key, index) => {
@@ -210,7 +270,7 @@ export default function Students() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1200px] px-5 md:px-8 py-14 md:py-16">
+      <section ref={guidanceRef} className={`mx-auto max-w-[1200px] px-5 md:px-8 py-14 md:py-16 ${revealClass(visibleSections.guidance)}`}>
         <div className="grid md:grid-cols-2 gap-8 items-start">
           <div>
             <h2 className="text-5xl font-extrabold text-[#1f2b55]">Guidance &amp; Counselling</h2>
@@ -241,7 +301,7 @@ export default function Students() {
         </div>
       </section>
 
-      <section className="bg-[#f7f8fd] border-y border-[#e3e7f1] py-16 md:py-20">
+      <section ref={nstpRef} className={`bg-[#f7f8fd] border-y border-[#e3e7f1] py-16 md:py-20 ${revealClass(visibleSections.nstp)}`}>
         <div className="mx-auto max-w-[1200px] px-5 md:px-8 text-center">
           <span className="inline-flex rounded-full bg-[#ef8a22] px-4 py-1 text-xs font-bold uppercase tracking-wide text-white">
             Required Program

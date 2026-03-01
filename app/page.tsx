@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ChevronLeft, ChevronRight, FileText, Check } from "lucide-react";
@@ -31,6 +31,8 @@ const studentOrgs = [
 
 export default function Index() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isRegistrarVisible, setIsRegistrarVisible] = useState(false);
+  const registrarRef = useRef<HTMLElement | null>(null);
 
   // Auto-slide
   useEffect(() => {
@@ -39,6 +41,35 @@ export default function Index() {
     }, 5000);
 
     return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+      setIsRegistrarVisible(true);
+      return;
+    }
+
+    const registrarElement = registrarRef.current;
+    if (!registrarElement) return;
+
+    const observer = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          setIsRegistrarVisible(true);
+          obs.unobserve(entry.target);
+        });
+      },
+      {
+        threshold: 0.22,
+        rootMargin: "0px 0px -8% 0px",
+      },
+    );
+
+    observer.observe(registrarElement);
+
+    return () => observer.disconnect();
   }, []);
 
   const prevSlide = () => {
@@ -130,7 +161,10 @@ export default function Index() {
       </section>
 
       {/* COLLEGE INTRO */}
-      <section className="py-24 md:py-32 text-center border-b border-border bg-white">
+      <section
+        className="py-24 md:py-32 text-center border-b border-border bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('/ceit_section_home.png')" }}
+      >
         <div className="max-w-[1100px] mx-auto px-5 md:px-8">
           <div className="w-28 h-28 rounded-full bg-gray-300 mx-auto mb-10 overflow-hidden flex items-center justify-center">
             <Image
@@ -174,7 +208,10 @@ export default function Index() {
       </section>
 
       {/* MEET THE DEAN */}
-      <section className="bg-[#f5f5f6] overflow-hidden">
+      <section
+        className="overflow-hidden bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('/ceit_section_dean.png')" }}
+      >
         <div className="max-w-[1400px] mx-auto flex flex-col lg:flex-row items-stretch min-h-[550px]">
           <div className="relative lg:w-1/2 flex-shrink-0 flex items-end justify-center lg:justify-start">
             <div
@@ -198,16 +235,16 @@ export default function Index() {
             <p className="text-base font-bold text-accent uppercase tracking-widest mb-4">
               Meet the Dean
             </p>
-            <h2 className="text-5xl md:text-7xl font-extrabold text-foreground leading-tight">
+            <h2 className="text-5xl md:text-7xl font-extrabold text-white leading-tight">
               Engr. Jordan Velasco
             </h2>
-            <p className="text-lg text-muted-foreground mt-6 leading-relaxed max-w-lg">
+            <p className="text-lg text-white/90 mt-6 leading-relaxed max-w-lg">
               Under his guidance, the College continues to uphold its mission of producing future-ready engineers and IT
               professionals who are equipped to meet the evolving demands of society and industry.
             </p>
             <Link
               href="/administration"
-              className="mt-8 inline-flex items-center gap-2 text-base border border-foreground/40 rounded-full px-8 py-3 hover:border-accent hover:text-accent transition-colors w-fit"
+              className="mt-8 inline-flex items-center gap-2 text-base bg-accent text-white border border-accent rounded-full px-8 py-3 transform-gpu transition-all duration-300 ease-out hover:scale-[1.03] hover:bg-white hover:text-accent hover:border-accent w-fit"
             >
               Meet the school officials <ArrowRight className="w-5 h-5" />
             </Link>
@@ -215,7 +252,12 @@ export default function Index() {
         </div>
       </section>
 
-      <section className="py-16 md:py-20 border-b border-[#e3e7f1] bg-white">
+      <section
+        ref={registrarRef}
+        className={`py-16 md:py-20 border-b border-[#e3e7f1] bg-white transform-gpu transition-all duration-700 ease-out ${
+          isRegistrarVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-30 translate-y-8 scale-95"
+        }`}
+      >
         <div className="mx-auto max-w-[1200px] px-5 md:px-8">
           <div className="flex items-center gap-3 mb-6">
             <FileText className="w-7 h-7 text-[#ef8a22]" />

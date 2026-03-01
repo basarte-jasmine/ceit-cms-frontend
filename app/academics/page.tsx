@@ -192,13 +192,15 @@ const Academics = () => {
                 <div key={tab}>
                   <button
                     onClick={() => handleTabChange(tab)}
-                    className={`w-full px-5 py-3 text-left text-sm sm:text-base font-semibold border rounded-md transition ${
+                    className={`w-full px-5 py-3 text-left text-sm sm:text-base font-semibold border rounded-md transition subtab-hover-btn ${
                       isActive
-                        ? "bg-[hsl(var(--navy-deep))] text-white border-[hsl(var(--navy-deep))]"
-                        : "bg-secondary text-muted-foreground border-border hover:bg-secondary/70"
+                        ? "bg-[hsl(var(--navy-deep))] text-accent border-[hsl(var(--navy-deep))] subtab-active"
+                        : "bg-secondary text-muted-foreground border-border"
                     }`}
                   >
-                    {tab}
+                    <span className="subtab-hover-label">
+                      {tab}
+                    </span>
                   </button>
 
                   {tab === "Programs Offered" && isProgramMenuOpen && (
@@ -211,9 +213,11 @@ const Academics = () => {
                             setActiveTab("Programs Offered");
                             setIsProgramMenuOpen(false);
                           }}
-                          className="w-full px-4 py-3 text-left text-base font-semibold text-foreground border-b border-border last:border-b-0 bg-background hover:bg-secondary transition"
+                          className="w-full px-4 py-3 text-left text-base font-semibold text-foreground border-b border-border last:border-b-0 bg-background subtab-hover-btn"
                         >
-                          {code}
+                          <span className="subtab-hover-label">
+                            {code}
+                          </span>
                         </button>
                       ))}
                     </div>
@@ -230,13 +234,15 @@ const Academics = () => {
                 <div key={tab} className="relative">
                   <button
                     onClick={() => handleTabChange(tab)}
-                    className={`px-6 py-3 text-sm md:text-base font-semibold border transition ${
+                    className={`px-6 py-3 text-sm md:text-base font-semibold border transition subtab-hover-btn ${
                       isActive
-                        ? "bg-[hsl(var(--navy-deep))] text-white border-[hsl(var(--navy-deep))]"
-                        : "bg-secondary text-muted-foreground border-border hover:bg-secondary/70"
+                        ? "bg-[hsl(var(--navy-deep))] text-accent border-[hsl(var(--navy-deep))] subtab-active"
+                        : "bg-secondary text-muted-foreground border-border"
                     }`}
                   >
-                    {tab}
+                    <span className="subtab-hover-label">
+                      {tab}
+                    </span>
                   </button>
 
                   {tab === "Programs Offered" && isProgramMenuOpen && (
@@ -249,9 +255,11 @@ const Academics = () => {
                             setActiveTab("Programs Offered");
                             setIsProgramMenuOpen(false);
                           }}
-                          className="w-full px-5 py-3 text-left text-base font-semibold text-foreground border-b border-border last:border-b-0 bg-background hover:bg-secondary transition"
+                          className="w-full px-5 py-3 text-left text-base font-semibold text-foreground border-b border-border last:border-b-0 bg-background subtab-hover-btn"
                         >
-                          {code}
+                          <span className="subtab-hover-label">
+                            {code}
+                          </span>
                         </button>
                       ))}
                     </div>
@@ -262,6 +270,7 @@ const Academics = () => {
           </div>
 
           <div className="mt-5 rounded-lg border border-border bg-secondary/30 p-6 md:p-8">
+            <div key={`${activeTab}-${activeProgram ?? "none"}`} className="tab-switch-reveal">
             {activeTab === "About CEIT" && (
               <div className="space-y-4 text-base md:text-lg text-muted-foreground leading-relaxed max-w-5xl">
                 <h2 className="text-3xl md:text-4xl font-extrabold text-foreground">About CEIT</h2>
@@ -428,6 +437,7 @@ const Academics = () => {
                 </div>
               </div>
             )}
+            </div>
           </div>
         </div>
       </section>
