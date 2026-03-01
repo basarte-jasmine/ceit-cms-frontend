@@ -2,226 +2,355 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { Users, Award } from "lucide-react";
 
 type OrgNodeProps = {
   name: string;
   role: string;
   image?: string;
   compact?: boolean;
+  accent?: string;
 };
 
-const OrgNode = ({ name, role, image, compact = false }: OrgNodeProps) => (
+const OrgNode = ({ name, role, image, compact = false, accent = "#ef8a22" }: OrgNodeProps) => (
   <div
     className={[
-      "mx-auto flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 shadow-sm",
-      compact ? "w-[250px] sm:w-[280px] md:w-[300px]" : "w-[280px] sm:w-[320px] md:w-[360px]",
+      "group relative mx-auto overflow-hidden rounded-2xl border bg-white shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-0.5",
+      compact ? "w-[240px] sm:w-[260px] md:w-[280px]" : "w-[280px] sm:w-[320px] md:w-[360px]",
     ].join(" ")}
+    style={{ borderColor: "#dfe3ef" }}
   >
-    <div className="relative flex h-12 w-12 md:h-14 md:w-14 flex-shrink-0 items-center justify-center overflow-hidden rounded-full border border-border bg-muted text-[10px] md:text-[11px] font-semibold text-muted-foreground">
-      {image ? (
-        <Image src={image} alt={name} fill className="object-cover" />
-      ) : (
-        "Image"
-      )}
+    <div
+      className="h-[3px] w-full"
+      style={{ background: "linear-gradient(to right, #1f2b55, #1f2b5560, transparent)" }}
+    />
+
+    <div className="relative flex items-center gap-3 px-4 py-3">
+      <span
+        className="absolute -right-1 -bottom-2 text-[44px] font-black opacity-[0.05] select-none pointer-events-none leading-none"
+        style={{ color: accent, fontFamily: "'Georgia', serif" }}
+      >
+        PLV
+      </span>
+
+      <div
+        className="relative z-10 flex h-12 w-12 md:h-14 md:w-14 flex-shrink-0 items-center justify-center overflow-hidden rounded-full border-2 bg-[#f2f4fb]"
+        style={{ borderColor: `${accent}40` }}
+      >
+        {image ? (
+          <Image src={image} alt={name} fill className="object-cover" />
+        ) : (
+          <span className="text-[10px] font-semibold text-[#4e5a7b]">Photo</span>
+        )}
+      </div>
+      <div className="relative z-10">
+        <p className="text-sm font-extrabold text-[#1f2b55] leading-tight">{name}</p>
+        <p
+          className="text-[10px] font-black uppercase tracking-wider leading-tight mt-1"
+          style={{ color: accent, fontFamily: "'Trebuchet MS', sans-serif" }}
+        >
+          {role}
+        </p>
+      </div>
     </div>
-    <div className="text-center">
-      <p className="text-sm font-bold text-foreground leading-tight">{name}</p>
-      <p className="text-xs text-muted-foreground leading-tight mt-1">{role}</p>
-    </div>
+
+    <div
+      className="h-[3px] w-full"
+      style={{ background: "linear-gradient(to right, #1f2b55, #1f2b5540, transparent)" }}
+    />
   </div>
 );
 
 type AdministrationTab = "Board of Regents" | "Organizational Chart";
 
-const administrationTabs: AdministrationTab[] = ["Board of Regents", "Organizational Chart"];
+const boardMembers = [
+  { role: "Chairman", names: ["City Mayor Weslie T. Gatchalian"], highlight: true },
+  { role: "Vice-Chairman", names: ["Atty. Danilo L. Concepcion"], highlight: true },
+  { role: "PLV President", names: ["Dr. Nedeña C. Torralba"], highlight: true },
+  {
+    role: "Regent",
+    names: [
+      "Regent Lorena C. Natividad-Borja",
+      "Regent Floro P. Alejo",
+      "Regent Wilfredo E. Cabral",
+      "Regent Angeleca SJ. Villena",
+    ],
+    highlight: false,
+  },
+  { role: "Member", names: ["Atty. Allan Roullo Yap"], highlight: false },
+  { role: "Board Secretary", names: ["Adelia E. Soriano"], highlight: false },
+  { role: "Board Treasurer", names: ["Ulysses Hermogenes C. Aguilar"], highlight: false },
+  {
+    role: "Technical Working Group",
+    names: [
+      "Elizabeth A. Chongco",
+      "Pia Febes P. Aquino",
+      "Flocerfida D. Villamar",
+      "Erlindo C. Dionisio",
+      "Leonora B. Katalbas",
+      "Ana Maria C. Fernandez",
+      "Carolina V. Santiago",
+      "Lanilyn A. Deroña",
+    ],
+    highlight: false,
+  },
+];
 
 const AdministrationPage = () => {
   const [activeTab, setActiveTab] = useState<AdministrationTab>("Board of Regents");
 
   return (
-    <div className="min-h-screen bg-background">
-      <section className="border-b border-border page-hero-gradient py-14 md:py-16">
-        <div className="mx-auto max-w-[1400px] px-5 md:px-12">
+    <div className="min-h-screen bg-[#f2f4fb]">
+
+      {/* ── HERO ── */}
+      <section
+        className="relative overflow-hidden py-16 md:py-20 bg-cover bg-center"
+        style={{ backgroundImage: "url('/banner_academics.png')" }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0a1628]/85 via-[#0d1f3c]/60 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#f2f4fb] to-transparent" />
+        <div
+          className="absolute inset-0 opacity-[0.08] pointer-events-none"
+          style={{
+            backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.6) 1px, transparent 1px)",
+            backgroundSize: "28px 28px",
+          }}
+        />
+        <div className="relative mx-auto max-w-[1400px] px-5 md:px-12">
+          <div
+            className="flex items-center gap-2 text-white/50 text-xs mb-4 uppercase tracking-widest"
+            style={{ fontFamily: "'Trebuchet MS', sans-serif" }}
+          >
+            <span>Home</span>
+            <span className="text-[#ef8a22]">›</span>
+            <span className="text-white/80">Administration</span>
+          </div>
           <h1 className="text-5xl md:text-6xl font-extrabold text-white">Administration</h1>
-          <p className="mt-5 max-w-3xl text-base md:text-lg text-white/90 leading-relaxed">
+          <div className="mt-3 h-1 w-16 rounded-full bg-gradient-to-r from-[#ef8a22] to-transparent" />
+          <p className="mt-4 max-w-3xl text-base md:text-lg text-white/85 leading-relaxed">
             Meet the administrators and school officials who lead CEIT programs, student services, and institutional development.
           </p>
         </div>
       </section>
 
-      <section className="py-20 md:py-24">
-        <div className="mx-auto max-w-[1400px] px-5 md:px-12">
-          <div className="space-y-2 lg:hidden">
-            {administrationTabs.map((tab) => {
-              const isActive = activeTab === tab;
-              return (
-                <button
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
-                  className={`w-full flex items-center justify-start px-5 py-4 text-left text-base sm:text-lg font-semibold border rounded-md transition subtab-hover-btn ${
-                    isActive
-                      ? "bg-[hsl(var(--navy-deep))] text-accent border-[hsl(var(--navy-deep))] subtab-active"
-                      : "bg-secondary text-muted-foreground border-border"
-                  }`}
-                >
-                  <span className="subtab-hover-label">{tab}</span>
-                </button>
-              );
-            })}
-          </div>
+      {/* ── MAIN CONTENT ── */}
+      <div className="mx-auto max-w-[1400px] px-5 md:px-12 py-12 md:py-16">
 
-          <div className="hidden lg:flex flex-wrap gap-0">
-            {administrationTabs.map((tab) => {
-              const isActive = activeTab === tab;
-              return (
-                <button
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
-                  className={`px-6 py-3 text-sm md:text-base font-semibold border transition subtab-hover-btn ${
-                    isActive
-                      ? "bg-[hsl(var(--navy-deep))] text-accent border-[hsl(var(--navy-deep))] subtab-active"
-                      : "bg-secondary text-muted-foreground border-border"
-                  }`}
-                >
-                  <span className="subtab-hover-label">{tab}</span>
-                </button>
-              );
-            })}
-          </div>
-
-          <div className="mt-5 rounded-lg border border-border bg-secondary/30 p-6 md:p-8 text-center">
-            {activeTab === "Board of Regents" ? (
-              <div>
-                <h2 className="text-4xl md:text-5xl font-extrabold text-foreground">Board of Regents</h2>
-                <div className="mt-8 space-y-6 max-w-3xl mx-auto">
-                  <div>
-                    <p className="text-sm md:text-base uppercase tracking-wide font-semibold text-muted-foreground">Chairman</p>
-                    <p className="mt-2 text-xl md:text-2xl font-bold text-foreground">CITY MAYOR WESLIE T. GATCHALIAN</p>
-                  </div>
-
-                  <div>
-                    <p className="text-sm md:text-base uppercase tracking-wide font-semibold text-muted-foreground">Vice-Chairman</p>
-                    <p className="mt-2 text-xl md:text-2xl font-bold text-foreground">ATTY. DANILO L. CONCEPCION</p>
-                  </div>
-
-                  <div>
-                    <p className="text-sm md:text-base uppercase tracking-wide font-semibold text-muted-foreground">PLV President, Members</p>
-                    <p className="mt-2 text-xl md:text-2xl font-bold text-foreground">DR. NEDEÑA C. TORRALBA</p>
-                  </div>
-
-                  <div>
-                    <p className="text-sm md:text-base uppercase tracking-wide font-semibold text-muted-foreground">
-                      Members
-                    </p>
-                    <ul className="mt-3 space-y-2 text-base md:text-lg text-foreground">
-                      <li>REGENT LORENA C. NATIVIDAD-BORJA</li>
-                      <li>REGENT FLORO P. ALEJO</li>
-                      <li>REGENT WILFREDO E. CABRAL</li>
-                      <li>REGENT ANGELECA SJ. VILLENA</li>
-                    </ul>
-                  </div>
-
-                  <div>
-                    <p className="text-sm md:text-base uppercase tracking-wide font-semibold text-muted-foreground">Members</p>
-                    <p className="mt-2 text-lg md:text-xl font-semibold text-foreground">ATTY. ALLAN ROULLO YAP</p>
-                  </div>
-
-                  <div>
-                    <p className="text-sm md:text-base uppercase tracking-wide font-semibold text-muted-foreground">Board Secretary</p>
-                    <p className="mt-2 text-lg md:text-xl font-semibold text-foreground">ADELIA E. SORIANO</p>
-                  </div>
-
-                  <div>
-                    <p className="text-sm md:text-base uppercase tracking-wide font-semibold text-muted-foreground">Board Treasurer</p>
-                    <p className="mt-2 text-lg md:text-xl font-semibold text-foreground">ULYSSES HERMOGENES C. AGUILAR</p>
-                  </div>
-
-                  <div>
-                    <ul className="mt-2 space-y-2 text-base md:text-lg text-foreground">
-                      <li>ELIZABETH A. CHONGCO</li>
-                      <li>PIA FEBES P. AQUINO</li>
-                      <li>FLOCERFIDA D. VILLAMAR</li>
-                      <li>ERLINDO C. DIONISIO</li>
-                      <li>LEONORA B. KATALBAS</li>
-                      <li>ANA MARIA C. FERNANDEZ</li>
-                      <li>CAROLINA V. SANTIAGO</li>
-                      <li>LANILYN A. DEROÑA</li>
-                    </ul>
-                    <p className="mt-4 text-sm md:text-base uppercase tracking-wide font-semibold text-muted-foreground">
-                      Technical Working Group
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div>
-                <h2 className="text-4xl md:text-5xl font-extrabold text-foreground">Organizational Chart</h2>
-                <p className="mt-4 text-lg text-muted-foreground">
-                  College of Engineering and Information Technology
-                </p>
-
-                <div className="mt-12 space-y-4 lg:hidden">
-                  <OrgNode name="Dr. Nedena C. Torralba" role="University President" image="/pres_torralba.png" />
-                  <OrgNode name="Dr. Michville Rivera" role="Vice President for Academic Affairs" image="/vpaa_rivera.png" />
-                  <OrgNode name="Engr. Jordan N. Velasco" role="Dean, College of CEIT" image="/engr_jordan-velasco.png" compact />
-                  <OrgNode name="Norie Caunda" role="Secretary, College of CEIT" image="/norie_caunda.png" compact />
-                  <OrgNode name="Engr. Tirao" role="Civil Engineering Department Chairperson" image="/engr_tirao.png" compact />
-                  <OrgNode name="Alex Montano" role="Electrical Engineering Department Chairperson" image="/alex_monstano.png" compact />
-                  <OrgNode name="Kenmar Bernardino" role="Information Technology Department Chairperson" image="/kenmar_bernardino.png" compact />
-                  <OrgNode name="Engr. Darryl John Bandino" role="CE Department Research Coordinator" image="/john-bandino.png" compact />
-                  <OrgNode name="Engr. Erica Cruz" role="EE Department Research Coordinator" image="/erika_cruz.png" compact />
-                  <OrgNode name="Patrick Luis Francisco" role="IT Department Research Coordinator" image="/patrick_francisco.png" compact />
-                </div>
-
-                <div className="mt-12 overflow-x-auto pb-4 hidden lg:block">
-                  <div className="mx-auto min-w-[1040px]">
-                    <OrgNode name="Dr. Nedena C. Torralba" role="University President" image="/pres_torralba.png" />
-                    <div className="mx-auto h-10 w-px bg-border" />
-
-                    <OrgNode name="Dr. Michville Rivera" role="Vice President for Academic Affairs" image="/vpaa_rivera.png" />
-                    <div className="mx-auto h-10 w-px bg-border" />
-
-                    <div className="relative mx-auto w-[620px]">
-                      <div className="absolute left-1/2 top-1/2 h-px w-[360px] -translate-x-1/2 -translate-y-1/2 bg-border" />
-                      <div className="relative flex items-center justify-center gap-6">
-                        <OrgNode name="Engr. Jordan N. Velasco" role="Dean, College of CEIT" image="/engr_jordan-velasco.png" compact />
-                        <OrgNode name="Norie Caunda" role="Secretary, College of CEIT" image="/norie_caunda.png" compact />
-                      </div>
-                    </div>
-
-                    <div className="mx-auto h-8 w-px bg-border" />
-                    <div className="mx-auto h-px w-[680px] bg-border" />
-
-                    <div className="mx-auto mb-2 flex w-[680px] justify-between">
-                      <div className="h-8 w-px bg-border" />
-                      <div className="h-8 w-px bg-border" />
-                      <div className="h-8 w-px bg-border" />
-                    </div>
-
-                    <div className="flex justify-center gap-10">
-                      <OrgNode name="Engr. Tirao" role="Civil Engineering Department Chairperson" image="/engr_tirao.png" compact />
-                      <OrgNode name="Alex Montano" role="Electrical Engineering Department Chairperson" image="/alex_monstano.png" compact />
-                      <OrgNode name="Kenmar Bernardino" role="Information Technology Department Chairperson" image="/kenmar_bernardino.png" compact />
-                    </div>
-
-                    <div className="mx-auto mt-2 mb-2 flex w-[980px] justify-between px-[100px]">
-                      <div className="h-8 w-px bg-border" />
-                      <div className="h-8 w-px bg-border" />
-                      <div className="h-8 w-px bg-border" />
-                    </div>
-
-                    <div className="flex justify-center gap-10">
-                      <OrgNode name="Engr. Darryl John Bandino" role="CE Department Research Coordinator" image="/john-bandino.png" compact />
-                      <OrgNode name="Engr. Erica Cruz" role="EE Department Research Coordinator" image="/erika_cruz.png" compact />
-                      <OrgNode name="Patrick Luis Francisco" role="IT Department Research Coordinator" image="/patrick_francisco.png" compact />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
+        {/* Section label */}
+        <div className="flex items-center gap-3 mb-6">
+          <Users className="w-5 h-5 text-[#ef8a22]" />
+          <span
+            className="text-xs font-bold uppercase tracking-widest text-[#ef8a22]"
+            style={{ fontFamily: "'Trebuchet MS', sans-serif" }}
+          >
+            School Officials
+          </span>
+          <div className="flex-1 h-px bg-gradient-to-r from-[#dfe3ef] to-transparent" />
         </div>
-      </section>
+
+        {/* ── TABS ── */}
+        <div className="flex flex-wrap gap-2 mb-8">
+          {(["Board of Regents", "Organizational Chart"] as AdministrationTab[]).map((tab) => {
+            const isActive = activeTab === tab;
+            return (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className="relative px-6 py-3 rounded-2xl text-sm font-bold border transition-all duration-200 overflow-hidden hover:shadow-md hover:-translate-y-0.5"
+                style={{
+                  background: isActive ? "linear-gradient(135deg, #1f2b55, #162046)" : "white",
+                  borderColor: isActive ? "#1f2b55" : "#dfe3ef",
+                  color: isActive ? "white" : "#4e5a7b",
+                  fontFamily: "'Trebuchet MS', sans-serif",
+                  letterSpacing: "0.04em",
+                }}
+              >
+                {isActive && (
+                  <span
+                    className="absolute bottom-0 left-0 right-0 h-[3px] rounded-b-2xl"
+                    style={{ background: "#ef8a22" }}
+                  />
+                )}
+                {tab}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* ── BOARD OF REGENTS ── */}
+        {activeTab === "Board of Regents" && (
+          <div key="board">
+            {/* Header card */}
+            <div
+              className="relative overflow-hidden rounded-2xl px-8 py-8 mb-8 border border-[#d97706]"
+              style={{ background: "linear-gradient(150deg, #ef8a22 0%, #d97706 55%, #b45309 100%)" }}
+            >
+              <div
+                className="absolute inset-0 opacity-[0.08] pointer-events-none"
+                style={{
+                  backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)",
+                  backgroundSize: "24px 24px",
+                }}
+              />
+              <div
+                className="absolute top-0 right-0 w-64 h-64 blur-3xl opacity-25 pointer-events-none"
+                style={{ background: "radial-gradient(circle, #fff7ed, transparent 70%)" }}
+              />
+              <div className="relative flex items-center gap-3 mb-1">
+                <Award className="w-5 h-5 text-white/80" />
+                <span
+                  className="text-xs font-bold uppercase tracking-widest text-white/80"
+                  style={{ fontFamily: "'Trebuchet MS', sans-serif" }}
+                >
+                  Governing Body
+                </span>
+              </div>
+              <h2 className="relative text-3xl md:text-4xl font-extrabold text-white">Board of Regents</h2>
+              <p className="relative mt-1 text-white/70 text-sm">
+                Pamantasan ng Lungsod ng Valenzuela
+              </p>
+            </div>
+
+            {/* Board members cards */}
+            <div
+              className="relative overflow-hidden rounded-2xl border border-[#dfe3ef] px-4 py-5 md:px-6 md:py-6"
+              style={{ background: "linear-gradient(135deg, #f7f8fd 0%, #eef2fa 100%)" }}
+            >
+              <div className="mx-auto max-w-[760px] grid grid-cols-1 gap-3">
+                {boardMembers.flatMap((group) =>
+                  group.names.map((name) => (
+                    <div
+                      key={`${group.role}-${name}`}
+                      className="relative overflow-hidden rounded-xl border border-[#d9deec] bg-[#fcfdff] px-4 py-3 shadow-[0_1px_0_rgba(31,43,85,0.05)] text-center"
+                    >
+                      <span
+                        className="pointer-events-none absolute -right-1 -bottom-2 text-[36px] font-black opacity-[0.04] leading-none select-none"
+                        style={{ color: "#1f2b55", fontFamily: "'Georgia', serif" }}
+                      >
+                        PLV
+                      </span>
+                      <p
+                        className="text-[9px] font-black uppercase tracking-widest leading-none mb-1"
+                        style={{ color: "#7a8398", fontFamily: "'Trebuchet MS', sans-serif" }}
+                      >
+                        {group.role}
+                      </p>
+                      <p
+                        className="text-[15px] font-extrabold text-[#1f2b55] leading-tight"
+                        style={{ fontFamily: "'Trebuchet MS', sans-serif" }}
+                      >
+                        {name}
+                      </p>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ── ORGANIZATIONAL CHART ── */}
+        {activeTab === "Organizational Chart" && (
+          <div key="orgchart">
+            {/* Header card */}
+            <div
+              className="relative overflow-hidden rounded-2xl px-8 py-8 mb-8 border border-[#d97706]"
+              style={{ background: "linear-gradient(150deg, #ef8a22 0%, #d97706 55%, #b45309 100%)" }}
+            >
+              <div
+                className="absolute inset-0 opacity-[0.08] pointer-events-none"
+                style={{
+                  backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)",
+                  backgroundSize: "24px 24px",
+                }}
+              />
+              <div
+                className="absolute top-0 right-0 w-64 h-64 blur-3xl opacity-25 pointer-events-none"
+                style={{ background: "radial-gradient(circle, #fff7ed, transparent 70%)" }}
+              />
+              <div className="relative flex items-center gap-3 mb-1">
+                <Users className="w-5 h-5 text-white/80" />
+                <span
+                  className="text-xs font-bold uppercase tracking-widest text-white/80"
+                  style={{ fontFamily: "'Trebuchet MS', sans-serif" }}
+                >
+                  CEIT Structure
+                </span>
+              </div>
+              <h2 className="relative text-3xl md:text-4xl font-extrabold text-white">Organizational Chart</h2>
+              <p className="relative mt-1 text-white/60 text-sm">
+                College of Engineering and Information Technology
+              </p>
+            </div>
+
+            {/* Mobile list */}
+            <div className="space-y-3 lg:hidden">
+              <OrgNode name="Dr. Nedena C. Torralba" role="University President" image="/pres_torralba.png" />
+              <OrgNode name="Dr. Michville Rivera" role="Vice President for Academic Affairs" image="/vpaa_rivera.png" />
+              <OrgNode name="Engr. Jordan N. Velasco" role="Dean, College of CEIT" image="/engr_jordan-velasco.png" compact />
+              <OrgNode name="Norie Caunda" role="Secretary, College of CEIT" image="/norie_caunda.png" compact />
+              <OrgNode name="Engr. Tirao" role="Civil Engineering Department Chairperson" image="/engr_tirao.png" compact />
+              <OrgNode name="Alex Montano" role="Electrical Engineering Department Chairperson" image="/alex_monstano.png" compact />
+              <OrgNode name="Kenmar Bernardino" role="Information Technology Department Chairperson" image="/kenmar_bernardino.png" compact />
+              <OrgNode name="Engr. Darryl John Bandino" role="CE Department Research Coordinator" image="/john-bandino.png" compact />
+              <OrgNode name="Engr. Erica Cruz" role="EE Department Research Coordinator" image="/erika_cruz.png" compact />
+              <OrgNode name="Patrick Luis Francisco" role="IT Department Research Coordinator" image="/patrick_francisco.png" compact />
+            </div>
+
+            {/* Desktop tree */}
+            <div className="hidden lg:block overflow-x-auto pb-4">
+              <div className="mx-auto min-w-[1040px] text-center">
+
+                <OrgNode name="Dr. Nedena C. Torralba" role="University President" image="/pres_torralba.png" />
+                <div className="mx-auto h-8 w-px bg-[#dfe3ef]" />
+
+                <OrgNode name="Dr. Michville Rivera" role="Vice President for Academic Affairs" image="/vpaa_rivera.png" />
+                <div className="mx-auto h-8 w-px bg-[#dfe3ef]" />
+
+                {/* Dean + Secretary side by side */}
+                <div className="relative mx-auto w-[620px]">
+                  <div className="absolute left-1/2 top-1/2 h-px w-[360px] -translate-x-1/2 -translate-y-1/2 bg-[#dfe3ef]" />
+                  <div className="relative flex items-center justify-center gap-6">
+                    <OrgNode name="Engr. Jordan N. Velasco" role="Dean, College of CEIT" image="/engr_jordan-velasco.png" compact accent="#ef8a22" />
+                    <OrgNode name="Norie Caunda" role="Secretary, College of CEIT" image="/norie_caunda.png" compact />
+                  </div>
+                </div>
+
+                <div className="mx-auto h-8 w-px bg-[#dfe3ef]" />
+                <div className="mx-auto h-px w-[680px] bg-[#dfe3ef]" />
+
+                <div className="mx-auto mb-2 flex w-[680px] justify-between">
+                  <div className="h-8 w-px bg-[#dfe3ef]" />
+                  <div className="h-8 w-px bg-[#dfe3ef]" />
+                  <div className="h-8 w-px bg-[#dfe3ef]" />
+                </div>
+
+                {/* Dept chairs */}
+                <div className="flex justify-center gap-10">
+                  <OrgNode name="Engr. Tirao" role="Civil Engineering Department Chairperson" image="/engr_tirao.png" compact accent="#10b981" />
+                  <OrgNode name="Alex Montano" role="Electrical Engineering Department Chairperson" image="/alex_monstano.png" compact accent="#f59e0b" />
+                  <OrgNode name="Kenmar Bernardino" role="Information Technology Department Chairperson" image="/kenmar_bernardino.png" compact accent="#3b82f6" />
+                </div>
+
+                <div className="mx-auto mt-2 mb-2 flex w-[980px] justify-between px-[100px]">
+                  <div className="h-8 w-px bg-[#dfe3ef]" />
+                  <div className="h-8 w-px bg-[#dfe3ef]" />
+                  <div className="h-8 w-px bg-[#dfe3ef]" />
+                </div>
+
+                {/* Research coordinators */}
+                <div className="flex justify-center gap-10">
+                  <OrgNode name="Engr. Darryl John Bandino" role="CE Department Research Coordinator" image="/john-bandino.png" compact accent="#10b981" />
+                  <OrgNode name="Engr. Erica Cruz" role="EE Department Research Coordinator" image="/erika_cruz.png" compact accent="#f59e0b" />
+                  <OrgNode name="Patrick Luis Francisco" role="IT Department Research Coordinator" image="/patrick_francisco.png" compact accent="#3b82f6" />
+                </div>
+
+              </div>
+            </div>
+          </div>
+        )}
+
+      </div>
     </div>
   );
 };

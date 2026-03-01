@@ -149,7 +149,7 @@ export default function Index() {
             <span className="w-1 h-10 md:h-12 rounded bg-gradient-to-b from-amber-400 to-amber-300 mt-1" />
             <div>
               <h1 className="text-3xl md:text-6xl lg:text-[64px] font-black text-white leading-[1.02] max-w-none lg:whitespace-nowrap tracking-tight">
-                Discover Our <span className="text-amber-300">World-Class</span> Facilities
+                Discover Our Facilities
               </h1>
               <p className="text-xs md:text-sm text-white/75 mt-2 max-w-lg leading-relaxed">
                 Explore state-of-the-art learning spaces, laboratories, and support centers across the CEIT campus.
