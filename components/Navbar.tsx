@@ -124,14 +124,15 @@ const Navbar = () => {
       <div
         className={`md:hidden absolute top-full left-0 right-0 z-[100] overflow-hidden bg-background border-b border-border shadow-md transition-all duration-300 ease-in-out ${
           mobileMenuOpen
-            ? "max-h-80 opacity-100 pointer-events-auto"
+            ? "max-h-[calc(100vh-5rem)] opacity-100 pointer-events-auto"
             : "max-h-0 opacity-0 pointer-events-none"
         }`}
       >
         <div
-          className={`bg-background px-6 py-4 space-y-4 transition-transform duration-300 ease-in-out ${
+          className={`bg-background px-6 py-4 space-y-4 overflow-y-auto transition-transform duration-300 ease-in-out ${
             mobileMenuOpen ? "translate-y-0" : "-translate-y-2"
           }`}
+          style={{ maxHeight: "calc(100vh - 5rem)" }}
         >
           {links.map((link) => {
             const isActive = pathname === link.to;

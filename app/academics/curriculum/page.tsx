@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { BookOpen, GraduationCap, Cpu, Building2, Zap } from "lucide-react";
 
@@ -101,9 +102,7 @@ export default function CurriculumPage() {
             className="flex items-center gap-2 text-white/50 text-xs mb-4 uppercase tracking-widest"
             style={{ fontFamily: "'Trebuchet MS', sans-serif" }}
           >
-            <span>Home</span>
-            <span className="text-[#ef8a22]">›</span>
-            <span>Academics</span>
+            <Link href="/" className="hover:text-white/80 transition-colors">Home</Link>
             <span className="text-[#ef8a22]">›</span>
             <span className="text-white/80">Curriculum</span>
           </div>
@@ -288,33 +287,6 @@ export default function CurriculumPage() {
             className="h-[3px]"
             style={{ background: `linear-gradient(to right, ${current.accentColor}, ${current.accentColor}30, transparent)` }}
           />
-        </div>
-
-        {/* ── STATS STRIP ── */}
-        <div className="mt-5 grid grid-cols-3 gap-3">
-          {[
-            { label: "Programs Offered", value: "3" },
-            { label: "Years Duration", value: "4" },
-            { label: "Specializations", value: "10+" },
-          ].map((stat) => (
-            <div
-              key={stat.label}
-              className="rounded-2xl bg-white border border-[#dfe3ef] px-5 py-4 flex flex-col items-center text-center shadow-sm"
-            >
-              <span
-                className="text-2xl font-extrabold text-[#ef8a22]"
-                style={{ fontFamily: "'Georgia', serif" }}
-              >
-                {stat.value}
-              </span>
-              <span
-                className="text-[10px] text-[#4e5a7b] mt-0.5 uppercase tracking-wider"
-                style={{ fontFamily: "'Trebuchet MS', sans-serif" }}
-              >
-                {stat.label}
-              </span>
-            </div>
-          ))}
         </div>
 
       </div>

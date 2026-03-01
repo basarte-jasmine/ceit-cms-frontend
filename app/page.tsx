@@ -15,12 +15,8 @@ const studentOrgs = [
 export default function Index() {
   const featuredFacilities = facilities.filter((facility) => facility.slug !== "ceit-building");
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [transitionDirection, setTransitionDirection] = useState<1 | -1>(1);
   const [isRegistrarVisible, setIsRegistrarVisible] = useState(false);
   const registrarRef = useRef<HTMLElement | null>(null);
-  const transitionOutTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const transitionInTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const totalSlides = featuredFacilities.length;
 
   // Auto-slide
@@ -33,13 +29,6 @@ export default function Index() {
 
     return () => clearInterval(timer);
   }, [totalSlides]);
-
-  useEffect(() => {
-    return () => {
-      if (transitionOutTimerRef.current) clearTimeout(transitionOutTimerRef.current);
-      if (transitionInTimerRef.current) clearTimeout(transitionInTimerRef.current);
-    };
-  }, []);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -71,23 +60,9 @@ export default function Index() {
   }, []);
 
   const goTo = (index: number) => {
-    if (totalSlides === 0 || isTransitioning) return;
+    if (totalSlides === 0) return;
     const normalizedIndex = (index + totalSlides) % totalSlides;
-    const direction: 1 | -1 =
-      normalizedIndex === currentSlide
-        ? 1
-        : index > currentSlide || (currentSlide === totalSlides - 1 && normalizedIndex === 0)
-          ? 1
-          : -1;
-
-    setTransitionDirection(direction);
-    setIsTransitioning(true);
-    transitionOutTimerRef.current = setTimeout(() => {
-      setCurrentSlide(normalizedIndex);
-    }, 180);
-    transitionInTimerRef.current = setTimeout(() => {
-      setIsTransitioning(false);
-    }, 520);
+    setCurrentSlide(normalizedIndex);
   };
 
   const prevSlide = () => {
@@ -98,7 +73,6 @@ export default function Index() {
     goTo(currentSlide + 1);
   };
 
-  const activeFacility = totalSlides > 0 ? featuredFacilities[currentSlide] : null;
   const prevFacility = totalSlides > 0 ? featuredFacilities[(currentSlide - 1 + totalSlides) % totalSlides] : null;
   const nextFacility = totalSlides > 0 ? featuredFacilities[(currentSlide + 1) % totalSlides] : null;
 
@@ -178,62 +152,63 @@ export default function Index() {
                 )}
               </Link>
 
-              <div
-                className={`rounded-2xl overflow-hidden bg-white shadow-[0_20px_60px_rgba(0,0,0,0.24),0_4px_18px_rgba(0,0,0,0.08)] transition-all duration-500 ease-[cubic-bezier(.22,.61,.36,1)] ${
-                  isTransitioning
-                    ? `opacity-65 scale-[0.985] ${transitionDirection === 1 ? "-translate-x-2" : "translate-x-2"}`
-                    : "opacity-100 scale-100 translate-x-0"
-                } min-h-[520px] md:min-h-0 md:h-[330px]`}
-              >
-                <div className="grid grid-cols-1 md:grid-cols-2 h-full">
-                  <Link
-                    href={activeFacility ? `/facility/${activeFacility.slug}` : "/facility"}
-                    className="relative h-[230px] md:h-full block"
-                    aria-label={activeFacility ? `Open ${activeFacility.title}` : "Open facility"}
-                  >
-                    {activeFacility && (
-                      <>
-                        <Image src={activeFacility.image} alt={activeFacility.title} fill className="object-cover" />
-                        <span className="absolute top-4 left-4 bg-amber-500 text-white text-[10px] font-bold tracking-[0.12em] uppercase px-3 py-1 rounded-full">
-                          Featured
-                        </span>
-                      </>
-                    )}
-                  </Link>
-
-                  <div className="relative overflow-hidden px-5 py-6 md:px-6 md:py-5 flex flex-col justify-center h-full bg-[linear-gradient(135deg,#ffffff_0%,#f7f9ff_46%,#e9eefc_100%)]">
+              <div className="rounded-2xl overflow-hidden bg-white shadow-[0_20px_60px_rgba(0,0,0,0.24),0_4px_18px_rgba(0,0,0,0.08)] min-h-[520px] md:min-h-0 md:h-[330px]">
+                <div className="relative h-full">
+                  {featuredFacilities.map((facility, idx) => (
                     <div
-                      aria-hidden="true"
-                      className="pointer-events-none absolute right-0 top-0 h-36 w-44 rounded-bl-[72px] bg-[linear-gradient(145deg,rgba(255,176,77,0.44)_0%,rgba(243,125,36,0.26)_58%,rgba(243,125,36,0.06)_100%)]"
-                    />
-                    <div
-                      aria-hidden="true"
-                      className="pointer-events-none absolute right-6 top-5 h-20 w-20 rounded-full border border-[#f2a65f]/35"
-                    />
-                    <div
-                      aria-hidden="true"
-                      className="pointer-events-none absolute right-10 top-9 h-12 w-12 rounded-full border border-[#f2a65f]/25"
-                    />
-                    <div
-                      aria-hidden="true"
-                      className="pointer-events-none absolute right-2 top-0 h-24 w-24 rounded-full bg-[radial-gradient(circle,rgba(255,173,87,0.26)_0%,rgba(255,173,87,0)_70%)] blur-md"
-                    />
-                    <p className="relative z-10 text-[11px] tracking-[0.16em] uppercase font-bold text-amber-500 mb-2">Campus Facility</p>
-                    <h2 className="relative z-10 text-3xl md:text-[40px] font-black text-[#111f3f] leading-[0.98] mb-3 line-clamp-2 min-h-[3.5rem] md:min-h-[5rem]">
-                      <Link href={activeFacility ? `/facility/${activeFacility.slug}` : "/facility"}>
-                        {activeFacility?.title ?? "Facility"}
-                      </Link>
-                    </h2>
-                    <p className="relative z-10 text-[#55607f] text-sm md:text-[14px] leading-relaxed mb-4 line-clamp-2 min-h-[2.8rem]">
-                      {activeFacility?.shortDescription ?? "View complete facility details."}
-                    </p>
-                    <Link
-                      href={activeFacility ? `/facility/${activeFacility.slug}` : "/facility"}
-                      className="relative z-10 inline-flex items-center gap-2 text-sm font-semibold text-[#1a2f5c] underline underline-offset-4 w-fit"
+                      key={facility.slug}
+                      className={`absolute inset-0 transition-all duration-700 ease-[cubic-bezier(.22,.61,.36,1)] ${
+                        idx === currentSlide ? "opacity-100 translate-x-0" : "opacity-0 translate-x-2 pointer-events-none"
+                      }`}
                     >
-                      Explore this space <ArrowRight className="w-4 h-4" />
-                    </Link>
-                  </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 h-full">
+                        <Link
+                          href={`/facility/${facility.slug}`}
+                          className="relative h-[230px] md:h-full block"
+                          aria-label={`Open ${facility.title}`}
+                        >
+                          <Image src={facility.image} alt={facility.title} fill className="object-cover" />
+                          <span className="absolute top-4 left-4 bg-amber-500 text-white text-[10px] font-bold tracking-[0.12em] uppercase px-3 py-1 rounded-full">
+                            Featured
+                          </span>
+                        </Link>
+
+                        <div className="relative overflow-hidden px-5 py-6 md:px-6 md:py-5 flex flex-col justify-center h-full bg-[linear-gradient(135deg,#ffffff_0%,#f7f9ff_46%,#e9eefc_100%)]">
+                          <div
+                            aria-hidden="true"
+                            className="pointer-events-none absolute right-0 top-0 h-36 w-44 rounded-bl-[72px] bg-[linear-gradient(145deg,rgba(255,176,77,0.44)_0%,rgba(243,125,36,0.26)_58%,rgba(243,125,36,0.06)_100%)]"
+                          />
+                          <div
+                            aria-hidden="true"
+                            className="pointer-events-none absolute right-6 top-5 h-20 w-20 rounded-full border border-[#f2a65f]/35"
+                          />
+                          <div
+                            aria-hidden="true"
+                            className="pointer-events-none absolute right-10 top-9 h-12 w-12 rounded-full border border-[#f2a65f]/25"
+                          />
+                          <div
+                            aria-hidden="true"
+                            className="pointer-events-none absolute right-2 top-0 h-24 w-24 rounded-full bg-[radial-gradient(circle,rgba(255,173,87,0.26)_0%,rgba(255,173,87,0)_70%)] blur-md"
+                          />
+                          <p className="relative z-10 text-[11px] tracking-[0.16em] uppercase font-bold text-amber-500 mb-2">Campus Facility</p>
+                          <h2 className="relative z-10 text-3xl md:text-[40px] font-black text-[#111f3f] leading-[0.98] mb-3 line-clamp-2 min-h-[3.5rem] md:min-h-[5rem]">
+                            <Link href={`/facility/${facility.slug}`}>
+                              {facility.title}
+                            </Link>
+                          </h2>
+                          <p className="relative z-10 text-[#55607f] text-sm md:text-[14px] leading-relaxed mb-4 line-clamp-2 min-h-[2.8rem]">
+                            {facility.shortDescription}
+                          </p>
+                          <Link
+                            href={`/facility/${facility.slug}`}
+                            className="relative z-10 inline-flex items-center gap-2 text-sm font-semibold text-[#1a2f5c] underline underline-offset-4 w-fit"
+                          >
+                            Explore this space <ArrowRight className="w-4 h-4" />
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
 

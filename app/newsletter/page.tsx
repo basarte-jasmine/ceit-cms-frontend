@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { BookOpen, Download, Calendar, Eye, Search, ChevronRight, Star } from "lucide-react";
 
@@ -125,7 +126,9 @@ export default function NewsletterPage() {
         <div className="relative mx-auto max-w-[1400px] px-5 md:px-12">
           <div className="flex items-center gap-2 text-white/50 text-xs mb-4 uppercase tracking-widest"
             style={{ fontFamily: "'Trebuchet MS', sans-serif" }}>
-            <span>Home</span><span className="text-[#ef8a22]">›</span><span className="text-white/80">Newsletter</span>
+            <Link href="/" className="hover:text-white/80 transition-colors">Home</Link>
+            <span className="text-[#ef8a22]">›</span>
+            <span className="text-white/80">Newsletter</span>
           </div>
           <h1 className="text-5xl md:text-6xl font-extrabold text-white">CEIT Newsletter</h1>
           <div className="mt-3 h-1 w-16 rounded-full bg-gradient-to-r from-[#ef8a22] to-transparent" />
