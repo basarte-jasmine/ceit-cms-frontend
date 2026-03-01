@@ -35,7 +35,13 @@ const Footer = () => {
   return (
     <footer
       className="relative overflow-hidden text-primary-foreground"
-      style={{ background: "hsl(var(--navy-deep))" }}
+      style={{
+        backgroundColor: "hsl(var(--navy-deep))",
+        backgroundImage: "url('/footer_bg.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
     >
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(7,29,66,.72)_0%,rgba(7,29,66,.9)_100%)]" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_70%_35%,rgba(39,120,255,.18)_0,transparent_48%)]" />

@@ -4,24 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ChevronLeft, ChevronRight, FileText, Check } from "lucide-react";
-
-const heroSlides = [
-  {
-    heading: "April Joy Yapcengco ends her run with grace, grit, and glory",
-    description:
-      "The Pamantasan ng Lungsod ng Valenzuela's courts bids a triumphant and emotional farewell to one of its most iconic athletes—April Joy Yapcengco.",
-  },
-  {
-    heading: "Excellence in Engineering and Information Technology",
-    description:
-      "Providing world-class education that prepares students to solve complex problems and lead innovation in a rapidly changing world.",
-  },
-  {
-    heading: "CEIT Shines Bright at PLV Intramurals 2025",
-    description:
-      "The PLV Intramurals 2025 officially wrapped up bringing weeks of excitement, camaraderie, and competitive spirit across various sports.",
-  },
-];
+import { facilities } from "@/lib/facilities";
 
 const studentOrgs = [
   { name: "Association of Civil Engineering Students", abbr: "ACES", image: "/CE_Logo.png" },
@@ -30,17 +13,32 @@ const studentOrgs = [
 ];
 
 export default function Index() {
+  const featuredFacilities = facilities.filter((facility) => facility.slug !== "ceit-building");
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [transitionDirection, setTransitionDirection] = useState<1 | -1>(1);
   const [isRegistrarVisible, setIsRegistrarVisible] = useState(false);
   const registrarRef = useRef<HTMLElement | null>(null);
+  const transitionOutTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const transitionInTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const totalSlides = featuredFacilities.length;
 
   // Auto-slide
   useEffect(() => {
+    if (totalSlides === 0) return;
+
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+      setCurrentSlide((prev) => (prev + 1) % totalSlides);
     }, 5000);
 
     return () => clearInterval(timer);
+  }, [totalSlides]);
+
+  useEffect(() => {
+    return () => {
+      if (transitionOutTimerRef.current) clearTimeout(transitionOutTimerRef.current);
+      if (transitionInTimerRef.current) clearTimeout(transitionInTimerRef.current);
+    };
   }, []);
 
   useEffect(() => {
@@ -72,91 +70,225 @@ export default function Index() {
     return () => observer.disconnect();
   }, []);
 
+  const goTo = (index: number) => {
+    if (totalSlides === 0 || isTransitioning) return;
+    const normalizedIndex = (index + totalSlides) % totalSlides;
+    const direction: 1 | -1 =
+      normalizedIndex === currentSlide
+        ? 1
+        : index > currentSlide || (currentSlide === totalSlides - 1 && normalizedIndex === 0)
+          ? 1
+          : -1;
+
+    setTransitionDirection(direction);
+    setIsTransitioning(true);
+    transitionOutTimerRef.current = setTimeout(() => {
+      setCurrentSlide(normalizedIndex);
+    }, 180);
+    transitionInTimerRef.current = setTimeout(() => {
+      setIsTransitioning(false);
+    }, 520);
+  };
+
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
+    goTo(currentSlide - 1);
   };
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    goTo(currentSlide + 1);
   };
+
+  const activeFacility = totalSlides > 0 ? featuredFacilities[currentSlide] : null;
+  const prevFacility = totalSlides > 0 ? featuredFacilities[(currentSlide - 1 + totalSlides) % totalSlides] : null;
+  const nextFacility = totalSlides > 0 ? featuredFacilities[(currentSlide + 1) % totalSlides] : null;
 
   return (
     <div className="min-h-screen bg-background">
       {/* HERO */}
       <section
-        className="relative w-full overflow-hidden flex flex-col"
-        style={{ background: "hsl(var(--navy-mid))", minHeight: "640px" }}
+        className="relative w-full overflow-hidden"
+        style={{
+          backgroundColor: "#0f2246",
+          minHeight: "620px",
+        }}
       >
-        <div className="absolute inset-0 bg-gray-600 opacity-40" />
+        {featuredFacilities.map((facility, idx) => (
+          <div
+            key={facility.slug}
+            className={`absolute inset-0 transition-opacity duration-700 ease-out ${
+              idx === currentSlide ? "opacity-100" : "opacity-0"
+            }`}
+            style={{
+              backgroundImage: `linear-gradient(135deg, rgba(10,24,52,0.94) 0%, rgba(20,43,86,0.9) 52%, rgba(9,25,58,0.94) 100%), url('${facility.image}')`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          />
+        ))}
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 opacity-35"
           style={{
-            background:
-              "linear-gradient(to top, hsl(var(--navy-deep) / 0.85) 0%, transparent 60%)",
+            backgroundImage:
+              "url(\"data:image/svg+xml,%3Csvg width='28' height='28' viewBox='0 0 28 28' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.12' stroke-width='1.2'%3E%3Cpath d='M14 8v12M8 14h12'/%3E%3C/g%3E%3C/svg%3E\")",
           }}
         />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(248,191,73,0.2),transparent_42%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(255,255,255,0.08),transparent_52%)]" />
 
-        {/* SLIDER CONTENT */}
-        <div className="relative z-10 flex-1 flex flex-col justify-end px-5 md:px-12 pb-24 max-w-[1400px] w-full mx-auto">
-          {/* viewport */}
-          <div className="overflow-hidden">
-            {/* track */}
-            <div
-              className="flex transition-transform duration-700 ease-in-out will-change-transform"
-              style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-            >
-              {heroSlides.map((slide, idx) => (
-                <div key={idx} className="min-w-full">
-                  <div className="max-w-5xl">
-                    <h1 className="text-5xl md:text-7xl font-extrabold text-white leading-tight">
-                      {slide.heading}
-                    </h1>
-                    <p className="text-lg text-white/80 mt-6 leading-relaxed max-w-3xl">
-                      {slide.description}
-                    </p>
+        <div className="relative z-10 w-full px-3 md:px-4 py-6 md:py-8">
+          <div className="flex items-center gap-3 mb-5 md:mb-6">
+            <div className="w-10 h-10 rounded-full overflow-hidden border border-white/40">
+              <Image src="/CEIT_Logo.png" alt="CEIT" width={40} height={40} className="object-cover" />
+            </div>
+            <span className="text-[11px] tracking-[0.18em] uppercase text-white/75 font-semibold">
+              PLV · CEIT Campus
+            </span>
+          </div>
 
-                    <button className="mt-8 border border-white/70 text-white text-base px-8 py-3 rounded-full inline-flex items-center gap-2 hover:bg-white/10 transition-colors w-fit">
-                      READ MORE <ArrowRight className="w-5 h-5" />
-                    </button>
-                  </div>
-                </div>
-              ))}
+          <div className="flex items-start gap-3 md:gap-4 mb-4 md:mb-5">
+            <span className="w-1 h-10 md:h-12 rounded bg-gradient-to-b from-amber-400 to-amber-300 mt-1" />
+            <div>
+              <h1 className="text-3xl md:text-6xl lg:text-[64px] font-black text-white leading-[1.02] max-w-none lg:whitespace-nowrap tracking-tight">
+                Discover Our <span className="text-amber-300">World-Class</span> Facilities
+              </h1>
+              <p className="text-xs md:text-sm text-white/75 mt-2 max-w-lg leading-relaxed">
+                Explore state-of-the-art learning spaces, laboratories, and support centers across the CEIT campus.
+              </p>
             </div>
           </div>
-        </div>
 
-        {/* CONTROLS */}
-        <button
-          onClick={prevSlide}
-          type="button"
-          className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 rounded-full p-2 text-white transition-colors z-10"
-          aria-label="Previous slide"
-        >
-          <ChevronLeft className="w-6 h-6" />
-        </button>
+          <div className="w-full">
+            <div className="grid grid-cols-1 lg:grid-cols-[92px_1fr_92px] gap-3 items-stretch">
+              <Link
+                href={prevFacility ? `/facility/${prevFacility.slug}` : "/facility"}
+                className="hidden lg:block relative rounded-xl overflow-hidden border border-white/20 bg-white/10 backdrop-blur-sm min-h-[330px]"
+                aria-label={prevFacility ? `Open ${prevFacility.title}` : "Open facility"}
+              >
+                {prevFacility && (
+                  <>
+                    <Image src={prevFacility.image} alt={prevFacility.title} fill className="object-cover opacity-65" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#081024]/85" />
+                    <p
+                      className="absolute left-1/2 -translate-x-1/2 bottom-3 text-[10px] text-white/90 uppercase tracking-[0.12em] font-semibold"
+                      style={{ writingMode: "vertical-rl", transform: "translateX(-50%) rotate(180deg)" }}
+                    >
+                      {prevFacility.title}
+                    </p>
+                  </>
+                )}
+              </Link>
 
-        <button
-          onClick={nextSlide}
-          type="button"
-          className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 rounded-full p-2 text-white transition-colors z-10"
-          aria-label="Next slide"
-        >
-          <ChevronRight className="w-6 h-6" />
-        </button>
+              <div
+                className={`rounded-2xl overflow-hidden bg-white shadow-[0_20px_60px_rgba(0,0,0,0.24),0_4px_18px_rgba(0,0,0,0.08)] transition-all duration-500 ease-[cubic-bezier(.22,.61,.36,1)] ${
+                  isTransitioning
+                    ? `opacity-65 scale-[0.985] ${transitionDirection === 1 ? "-translate-x-2" : "translate-x-2"}`
+                    : "opacity-100 scale-100 translate-x-0"
+                } min-h-[520px] md:min-h-0 md:h-[330px]`}
+              >
+                <div className="grid grid-cols-1 md:grid-cols-2 h-full">
+                  <Link
+                    href={activeFacility ? `/facility/${activeFacility.slug}` : "/facility"}
+                    className="relative h-[230px] md:h-full block"
+                    aria-label={activeFacility ? `Open ${activeFacility.title}` : "Open facility"}
+                  >
+                    {activeFacility && (
+                      <>
+                        <Image src={activeFacility.image} alt={activeFacility.title} fill className="object-cover" />
+                        <span className="absolute top-4 left-4 bg-amber-500 text-white text-[10px] font-bold tracking-[0.12em] uppercase px-3 py-1 rounded-full">
+                          Featured
+                        </span>
+                      </>
+                    )}
+                  </Link>
 
-        {/* DOTS */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2.5 z-10">
-          {heroSlides.map((_, i) => (
-            <button
-              key={i}
-              type="button"
-              onClick={() => setCurrentSlide(i)}
-              className={`w-3 h-3 rounded-full transition-colors ${
-                i === currentSlide ? "bg-accent" : "bg-white/40"
-              }`}
-              aria-label={`Go to slide ${i + 1}`}
-            />
-          ))}
+                  <div className="relative overflow-hidden px-5 py-6 md:px-6 md:py-5 flex flex-col justify-center h-full bg-[linear-gradient(135deg,#ffffff_0%,#f7f9ff_46%,#e9eefc_100%)]">
+                    <div
+                      className="pointer-events-none absolute top-0 right-0 h-[130px] w-[260px] bg-[#ff735f]"
+                      style={{ clipPath: "polygon(40% 0, 100% 0, 100% 100%)" }}
+                    />
+                    <p className="relative z-10 text-[11px] tracking-[0.16em] uppercase font-bold text-amber-500 mb-2">Campus Facility</p>
+                    <h2 className="relative z-10 text-3xl md:text-[40px] font-black text-[#111f3f] leading-[0.98] mb-3 line-clamp-2 min-h-[3.5rem] md:min-h-[5rem]">
+                      <Link href={activeFacility ? `/facility/${activeFacility.slug}` : "/facility"}>
+                        {activeFacility?.title ?? "Facility"}
+                      </Link>
+                    </h2>
+                    <p className="relative z-10 text-[#55607f] text-sm md:text-[14px] leading-relaxed mb-4 line-clamp-2 min-h-[2.8rem]">
+                      {activeFacility?.shortDescription ?? "View complete facility details."}
+                    </p>
+                    <Link
+                      href={activeFacility ? `/facility/${activeFacility.slug}` : "/facility"}
+                      className="relative z-10 inline-flex items-center gap-2 text-sm font-semibold text-[#1a2f5c] underline underline-offset-4 w-fit"
+                    >
+                      Explore this space <ArrowRight className="w-4 h-4" />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+
+              <Link
+                href={nextFacility ? `/facility/${nextFacility.slug}` : "/facility"}
+                className="hidden lg:block relative rounded-xl overflow-hidden border border-white/20 bg-white/10 backdrop-blur-sm min-h-[330px]"
+                aria-label={nextFacility ? `Open ${nextFacility.title}` : "Open facility"}
+              >
+                {nextFacility && (
+                  <>
+                    <Image src={nextFacility.image} alt={nextFacility.title} fill className="object-cover opacity-65" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#081024]/85" />
+                    <p
+                      className="absolute left-1/2 -translate-x-1/2 bottom-3 text-[10px] text-white/90 uppercase tracking-[0.12em] font-semibold"
+                      style={{ writingMode: "vertical-rl", transform: "translateX(-50%) rotate(180deg)" }}
+                    >
+                      {nextFacility.title}
+                    </p>
+                  </>
+                )}
+              </Link>
+            </div>
+
+            <div className="mt-3 md:mt-4 flex flex-wrap items-center justify-between gap-4">
+              <div className="flex items-center gap-2">
+                {featuredFacilities.map((_, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => goTo(i)}
+                    className={`h-2 rounded-full transition-all duration-300 ${
+                      i === currentSlide ? "w-7 bg-amber-400" : "w-2 bg-white/45 hover:bg-white/65"
+                    }`}
+                    aria-label={`Go to slide ${i + 1}`}
+                  />
+                ))}
+                <span className="text-xs text-white/60 ml-2">
+                  {totalSlides === 0 ? "0 / 0" : `${currentSlide + 1} / ${totalSlides}`}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <Link
+                  href="/facility"
+                  className="text-white/90 text-sm font-semibold underline underline-offset-4 inline-flex items-center gap-2 mr-2"
+                >
+                  View all <ArrowRight className="w-4 h-4" />
+                </Link>
+                <button
+                  onClick={prevSlide}
+                  type="button"
+                  className="w-11 h-11 rounded-full border border-white/45 bg-white/10 text-white inline-flex items-center justify-center hover:bg-white/20 transition-colors"
+                  aria-label="Previous slide"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={nextSlide}
+                  type="button"
+                  className="w-11 h-11 rounded-full border border-white/45 bg-white/10 text-white inline-flex items-center justify-center hover:bg-white/20 transition-colors"
+                  aria-label="Next slide"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
