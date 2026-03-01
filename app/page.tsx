@@ -202,10 +202,6 @@ export default function Index() {
                   </Link>
 
                   <div className="relative overflow-hidden px-5 py-6 md:px-6 md:py-5 flex flex-col justify-center h-full bg-[linear-gradient(135deg,#ffffff_0%,#f7f9ff_46%,#e9eefc_100%)]">
-                    <div
-                      className="pointer-events-none absolute top-0 right-0 h-[130px] w-[260px] bg-[#ff735f]"
-                      style={{ clipPath: "polygon(40% 0, 100% 0, 100% 100%)" }}
-                    />
                     <p className="relative z-10 text-[11px] tracking-[0.16em] uppercase font-bold text-amber-500 mb-2">Campus Facility</p>
                     <h2 className="relative z-10 text-3xl md:text-[40px] font-black text-[#111f3f] leading-[0.98] mb-3 line-clamp-2 min-h-[3.5rem] md:min-h-[5rem]">
                       <Link href={activeFacility ? `/facility/${activeFacility.slug}` : "/facility"}>
