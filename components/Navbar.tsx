@@ -20,6 +20,8 @@ const Navbar = () => {
     { to: "/academics/curriculum", label: "Curriculum" },
     { to: "/students", label: "Students" },
     { to: "/facility", label: "Facility" },
+    { to: "/news", label: "News Page" },
+    { to: "/newsletter", label: "CEIT Newsletter" },
     { to: "/administration", label: "Administration" },
   ];
 
