@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Newspaper, ThumbsUp, MessageCircle, Share2, ExternalLink, Search, Filter } from "lucide-react";
+import { fetchArticles } from "@/lib/api";
+import type { Article } from "@/lib/types/article";
 
 const categories = ["All", "Announcements", "Events", "Achievements", "Partnerships"];
 
@@ -93,6 +95,39 @@ const fbPosts = [
   },
 ];
 
+type NewsPost = {
+  id: number;
+  category: string;
+  date: string;
+  time: string;
+  title: string;
+  content: string;
+  image: boolean;
+  likes: number;
+  comments: number;
+  shares: number;
+  tag: string;
+};
+
+function mapArticleToPost(article: Article, index: number): NewsPost {
+  const createdAt = new Date(article.created_at);
+  const category = article.status === "approved" ? "Announcements" : article.status === "pending" ? "Events" : "Achievements";
+
+  return {
+    id: index + 1,
+    category,
+    date: createdAt.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
+    time: createdAt.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" }),
+    title: article.title,
+    content: article.body,
+    image: Boolean(article.image_path),
+    likes: 0,
+    comments: 0,
+    shares: 0,
+    tag: "Announcement",
+  };
+}
+
 const tagColors: Record<string, { bg: string; text: string; border: string }> = {
   Enrollment:    { bg: "bg-blue-50",    text: "text-blue-600",    border: "border-blue-200" },
   Achievement:   { bg: "bg-amber-50",   text: "text-amber-600",   border: "border-amber-200" },
@@ -104,8 +139,21 @@ const tagColors: Record<string, { bg: string; text: string; border: string }> = 
 export default function NewsPage() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [search, setSearch] = useState("");
+  const [posts, setPosts] = useState<NewsPost[]>([]);
 
-  const filtered = fbPosts.filter((p) => {
+  useEffect(() => {
+    const loadArticles = async () => {
+      try {
+        const articles = await fetchArticles();
+        setPosts(articles.map(mapArticleToPost));
+      } catch {
+      }
+    };
+
+    void loadArticles();
+  }, []);
+
+  const filtered = posts.filter((p) => {
     const matchCat = activeCategory === "All" || p.category === activeCategory;
     const matchSearch = p.title.toLowerCase().includes(search.toLowerCase()) ||
       p.content.toLowerCase().includes(search.toLowerCase());
@@ -211,7 +259,7 @@ export default function NewsPage() {
                   >
                     {cat}
                     <span className="float-right text-xs text-[#4e5a7b]/60">
-                      {cat === "All" ? fbPosts.length : fbPosts.filter((p) => p.category === cat).length}
+                      {cat === "All" ? posts.length : posts.filter((p) => p.category === cat).length}
                     </span>
                   </button>
                 ))}
