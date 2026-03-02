@@ -17,12 +17,12 @@ const Navbar = () => {
   const links = [
     { to: "/", label: "Home" },
     { to: "/academics", label: "Academics" },
+    { to: "/administration", label: "Administration" },
+    { to: "/news", label: "News Page" },
+    { to: "/newsletter", label: "CEIT Newsletter" },
     { to: "/academics/curriculum", label: "Curriculum" },
     { to: "/students", label: "Students" },
     { to: "/facility", label: "Facility" },
-    { to: "/news", label: "News Page" },
-    { to: "/newsletter", label: "CEIT Newsletter" },
-    { to: "/administration", label: "Administration" },
   ];
 
   const handleLinkClick = () => {
@@ -92,11 +92,10 @@ const Navbar = () => {
               <div key={link.to} className="relative">
                 <Link
                   href={link.to}
-                  className={`text-sm font-medium transition-colors ${
-                    isActive
+                  className={`text-sm font-medium transition-colors ${isActive
                       ? "text-accent border-b-2 border-accent pb-1"
                       : "text-slate-600 hover:text-accent"
-                  }`}
+                    }`}
                 >
                   {link.label}
                 </Link>
@@ -122,16 +121,14 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       <div
-        className={`md:hidden absolute top-full left-0 right-0 z-[100] overflow-hidden bg-background border-b border-border shadow-md transition-all duration-300 ease-in-out ${
-          mobileMenuOpen
+        className={`md:hidden absolute top-full left-0 right-0 z-[100] overflow-hidden bg-background border-b border-border shadow-md transition-all duration-300 ease-in-out ${mobileMenuOpen
             ? "max-h-[calc(100vh-5rem)] opacity-100 pointer-events-auto"
             : "max-h-0 opacity-0 pointer-events-none"
-        }`}
+          }`}
       >
         <div
-          className={`bg-background px-6 py-4 space-y-4 overflow-y-auto transition-transform duration-300 ease-in-out ${
-            mobileMenuOpen ? "translate-y-0" : "-translate-y-2"
-          }`}
+          className={`bg-background px-6 py-4 space-y-4 overflow-y-auto transition-transform duration-300 ease-in-out ${mobileMenuOpen ? "translate-y-0" : "-translate-y-2"
+            }`}
           style={{ maxHeight: "calc(100vh - 5rem)" }}
         >
           {links.map((link) => {
@@ -142,9 +139,8 @@ const Navbar = () => {
                 <Link
                   href={link.to}
                   onClick={handleLinkClick}
-                  className={`block text-sm font-medium transition-colors py-2 ${
-                    isActive ? "text-accent" : "text-slate-600 hover:text-accent"
-                  }`}
+                  className={`block text-sm font-medium transition-colors py-2 ${isActive ? "text-accent" : "text-slate-600 hover:text-accent"
+                    }`}
                 >
                   {link.label}
                 </Link>

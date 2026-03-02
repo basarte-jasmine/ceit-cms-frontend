@@ -15,8 +15,8 @@ type OrgNodeProps = {
 const OrgNode = ({ name, role, image, compact = false, accent = "#ef8a22" }: OrgNodeProps) => (
   <div
     className={[
-      "group relative mx-auto overflow-hidden rounded-2xl border bg-white shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-0.5",
-      compact ? "w-[240px] sm:w-[260px] md:w-[280px]" : "w-[280px] sm:w-[320px] md:w-[360px]",
+      "group relative mx-auto w-full overflow-hidden rounded-2xl border bg-white shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-0.5",
+      compact ? "max-w-[320px]" : "max-w-[420px]",
     ].join(" ")}
     style={{ borderColor: "#dfe3ef" }}
   >
@@ -43,10 +43,10 @@ const OrgNode = ({ name, role, image, compact = false, accent = "#ef8a22" }: Org
           <span className="text-[10px] font-semibold text-[#4e5a7b]">Photo</span>
         )}
       </div>
-      <div className="relative z-10">
-        <p className="text-sm font-extrabold text-[#1f2b55] leading-tight">{name}</p>
+      <div className="relative z-10 min-w-0">
+        <p className="text-sm font-extrabold text-[#1f2b55] leading-tight break-words">{name}</p>
         <p
-          className="text-[10px] font-black uppercase tracking-wider leading-tight mt-1"
+          className="text-[10px] font-black uppercase tracking-wider leading-tight mt-1 break-words"
           style={{ color: accent, fontFamily: "'Trebuchet MS', sans-serif" }}
         >
           {role}
@@ -284,7 +284,7 @@ const AdministrationPage = () => {
             </div>
 
             {/* Mobile list */}
-            <div className="space-y-3 lg:hidden">
+            <div className="space-y-3 lg:hidden mx-auto max-w-[420px]">
               <OrgNode name="Dr. Nedena C. Torralba" role="University President" image="/pres_torralba.png" />
               <OrgNode name="Dr. Michville Rivera" role="Vice President for Academic Affairs" image="/vpaa_rivera.png" />
               <OrgNode name="Engr. Jordan N. Velasco" role="Dean, College of CEIT" image="/engr_jordan-velasco.png" compact />
