@@ -1,97 +1,71 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Newspaper, ThumbsUp, MessageCircle, Share2, ExternalLink, Search, Filter } from "lucide-react";
+import { fetchArticles, likeArticle } from "@/lib/api";
+import type { Article } from "@/lib/types/article";
 
 const categories = ["All", "Announcements", "Events", "Achievements", "Partnerships"];
 
-const fbPosts = [
-  {
-    id: 1,
-    category: "Announcements",
-    date: "February 28, 2026",
-    time: "10:32 AM",
-    title: "Enrollment for AY 2026–2027 Now Open!",
-    content:
-      "📢 OFFICIAL ANNOUNCEMENT\n\nThe College of Engineering and Information Technology (CEIT) is pleased to announce that enrollment for Academic Year 2026–2027 is now officially open!\n\nAll incoming freshmen, transferees, and continuing students are advised to coordinate with their respective departments for enrollment schedules and requirements.\n\nFor inquiries, contact the Dean's Office at local 140.",
-    image: true,
-    likes: 248,
-    comments: 34,
-    shares: 91,
-    tag: "Enrollment",
-  },
-  {
-    id: 2,
-    category: "Achievements",
-    date: "February 20, 2026",
-    time: "3:15 PM",
-    title: "CEIT Students Top Regional Engineering Quiz Bee",
-    content:
-      "🏆 CONGRATULATIONS!\n\nWe are proud to announce that our BSEE students from PLV-CEIT clinched 1st place in the Regional Engineering Quiz Bee held last February 18, 2026 at Polytechnic University of the Philippines.\n\nThis achievement reflects the dedication of our students and faculty in upholding academic excellence. Mabuhay kayo!\n\n#PLVStrong #CEITPride",
-    image: true,
-    likes: 512,
-    comments: 67,
-    shares: 143,
-    tag: "Achievement",
-  },
-  {
-    id: 3,
-    category: "Events",
-    date: "February 14, 2026",
-    time: "9:00 AM",
-    title: "ITlympics 2026 — Registration Now Open",
-    content:
-      "💻 VITS presents: ITlympics 2026!\n\nThe annual IT competition organized by the Valenzuela Information Technology Society (VITS) is back! Registration is now open for all college students in Metro Manila.\n\nEvents include:\n• Web Design Challenge\n• Algorithm Sprint\n• Network Troubleshooting\n• UI/UX Showdown\n\nRegister at the VITS Facebook page. Limited slots only!",
-    image: true,
-    likes: 389,
-    comments: 52,
-    shares: 118,
-    tag: "Event",
-  },
-  {
-    id: 4,
-    category: "Partnerships",
-    date: "February 5, 2026",
-    time: "2:00 PM",
-    title: "CEIT Signs MOA with PHILEC Corporation",
-    content:
-      "🤝 PARTNERSHIP ANNOUNCEMENT\n\nPLV-CEIT has officially signed a Memorandum of Agreement (MOA) with PHILEC Corporation, paving the way for internship opportunities, industry mentorship, and collaborative research projects for our Electrical Engineering students.\n\nThis partnership strengthens our commitment to producing industry-ready graduates. Thank you, PHILEC!",
-    image: true,
-    likes: 204,
-    comments: 19,
-    shares: 76,
-    tag: "Partnership",
-  },
-  {
-    id: 5,
-    category: "Announcements",
-    date: "January 28, 2026",
-    time: "11:45 AM",
-    title: "PLV-CAT 2026 Results Released",
-    content:
-      "📋 IMPORTANT NOTICE\n\nThe results of the Pamantasan ng Lungsod ng Valenzuela College Admission Test (PLV-CAT) 2026 are now available.\n\nQualified applicants are advised to proceed to the Registrar's Office for next steps and to submit the required admission documents on or before March 10, 2026.\n\nCongratulations to all who passed! We look forward to welcoming you to the PLV family. 🎓",
-    image: false,
-    likes: 631,
-    comments: 89,
-    shares: 215,
-    tag: "Announcement",
-  },
-  {
-    id: 6,
-    category: "Events",
-    date: "January 15, 2026",
-    time: "8:00 AM",
-    title: "AEES General Assembly & Leadership Summit 2026",
-    content:
-      "⚡ AEES is calling all EE students!\n\nJoin us for the AEES General Assembly & Leadership Summit 2026 on January 22, 2026 at the PLV Auditorium.\n\nThis year's theme: \"Empowering the Next Generation of Electrical Engineers.\"\n\nAll BSEE students are encouraged to attend. Attendance will be recorded. See you there! 🔌",
-    image: true,
-    likes: 176,
-    comments: 28,
-    shares: 54,
-    tag: "Event",
-  },
-];
+type NewsPost = {
+  id: string;
+  category: string;
+  date: string;
+  time: string;
+  title: string;
+  content: string;
+  imageUrl: string | null;
+  likes: number;
+  comments: number;
+  shares: number;
+  tag: string;
+};
+
+function resolveImageUrl(path: string | null | undefined): string | null {
+  if (!path) {
+    return null;
+  }
+
+  if (path.startsWith("http://") || path.startsWith("https://")) {
+    return path;
+  }
+
+  const apiBase = process.env.NEXT_PUBLIC_API_URL ?? "http://127.0.0.1:8000/api/v1";
+  const backendOrigin = apiBase.replace(/\/api\/v1\/?$/, "");
+  return `${backendOrigin}${path.startsWith("/") ? "" : "/"}${path}`;
+}
+
+function mapArticleToPost(article: Article): NewsPost {
+  const createdAt = new Date(article.created_at);
+  const categoryMap: Record<Article["category"], string> = {
+    announcements: "Announcements",
+    achievements: "Achievements",
+    events: "Events",
+    partnerships: "Partnerships",
+  };
+  const tagMap: Record<Article["category"], string> = {
+    announcements: "Announcement",
+    achievements: "Achievement",
+    events: "Event",
+    partnerships: "Partnership",
+  };
+  const category = categoryMap[article.category] ?? "Announcements";
+
+  return {
+    id: article.id,
+    category,
+    date: createdAt.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
+    time: createdAt.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" }),
+    title: article.title,
+    content: article.body,
+    imageUrl: resolveImageUrl(article.image_path),
+    likes: article.like_count,
+    comments: 0,
+    shares: 0,
+    tag: tagMap[article.category] ?? "Announcement",
+  };
+}
 
 const tagColors: Record<string, { bg: string; text: string; border: string }> = {
   Enrollment:    { bg: "bg-blue-50",    text: "text-blue-600",    border: "border-blue-200" },
@@ -104,13 +78,49 @@ const tagColors: Record<string, { bg: string; text: string; border: string }> = 
 export default function NewsPage() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [search, setSearch] = useState("");
+  const [posts, setPosts] = useState<NewsPost[]>([]);
+  const [likingPostIds, setLikingPostIds] = useState<Set<string>>(new Set());
 
-  const filtered = fbPosts.filter((p) => {
+  useEffect(() => {
+    const loadArticles = async () => {
+      try {
+        const articles = await fetchArticles();
+        setPosts(articles.map((article) => mapArticleToPost(article)));
+      } catch {
+      }
+    };
+
+    void loadArticles();
+  }, []);
+
+  const filtered = posts.filter((p) => {
     const matchCat = activeCategory === "All" || p.category === activeCategory;
     const matchSearch = p.title.toLowerCase().includes(search.toLowerCase()) ||
       p.content.toLowerCase().includes(search.toLowerCase());
     return matchCat && matchSearch;
   });
+
+  const handleLike = async (postId: string) => {
+    if (likingPostIds.has(postId)) {
+      return;
+    }
+
+    setLikingPostIds((prev) => new Set(prev).add(postId));
+    setPosts((prev) => prev.map((post) => (post.id === postId ? { ...post, likes: post.likes + 1 } : post)));
+
+    try {
+      const updated = await likeArticle(postId);
+      setPosts((prev) => prev.map((post) => (post.id === postId ? { ...post, likes: updated.like_count } : post)));
+    } catch {
+      setPosts((prev) => prev.map((post) => (post.id === postId ? { ...post, likes: Math.max(0, post.likes - 1) } : post)));
+    } finally {
+      setLikingPostIds((prev) => {
+        const next = new Set(prev);
+        next.delete(postId);
+        return next;
+      });
+    }
+  };
 
   return (
     <main className="min-h-screen bg-[#f2f4fb]">
@@ -211,7 +221,7 @@ export default function NewsPage() {
                   >
                     {cat}
                     <span className="float-right text-xs text-[#4e5a7b]/60">
-                      {cat === "All" ? fbPosts.length : fbPosts.filter((p) => p.category === cat).length}
+                      {cat === "All" ? posts.length : posts.filter((p) => p.category === cat).length}
                     </span>
                   </button>
                 ))}
@@ -271,15 +281,14 @@ export default function NewsPage() {
                       <p className="text-sm text-[#4e5a7b] leading-relaxed whitespace-pre-line line-clamp-5">{post.content}</p>
                     </div>
 
-                    {/* Post image placeholder */}
-                    {post.image && (
-                      <div className="mx-6 mb-5 rounded-xl overflow-hidden border border-[#dfe3ef] bg-gradient-to-br from-[#f2f4fb] to-[#e8ecf7] h-48 flex items-center justify-center">
-                        <div className="text-center">
-                          <div className="w-12 h-12 rounded-xl bg-[#dfe3ef] mx-auto mb-2 flex items-center justify-center">
-                            <Newspaper className="w-5 h-5 text-[#4e5a7b]" />
-                          </div>
-                          <p className="text-xs text-[#4e5a7b]" style={{ fontFamily: "'Trebuchet MS', sans-serif" }}>Post Image</p>
-                        </div>
+                    {post.imageUrl && (
+                      <div className="mx-6 mb-5 rounded-xl overflow-hidden border border-[#dfe3ef] bg-[#f2f4fb] h-64">
+                        <img
+                          src={post.imageUrl}
+                          alt={post.title}
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                        />
                       </div>
                     )}
 
@@ -302,17 +311,26 @@ export default function NewsPage() {
 
                     {/* Reaction buttons */}
                     <div className="px-4 py-2 border-t border-[#f2f4fb] flex gap-1">
-                      {[
-                        { icon: <ThumbsUp className="w-3.5 h-3.5" />, label: "Like" },
-                        { icon: <MessageCircle className="w-3.5 h-3.5" />, label: "Comment" },
-                        { icon: <Share2 className="w-3.5 h-3.5" />, label: "Share" },
-                      ].map((btn) => (
-                        <button key={btn.label}
-                          className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-semibold text-[#4e5a7b] hover:bg-[#f2f4fb] transition-colors"
-                          style={{ fontFamily: "'Trebuchet MS', sans-serif" }}>
-                          {btn.icon} {btn.label}
-                        </button>
-                      ))}
+                      <button
+                        onClick={() => void handleLike(post.id)}
+                        disabled={likingPostIds.has(post.id)}
+                        className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-semibold text-[#4e5a7b] hover:bg-[#f2f4fb] transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+                        style={{ fontFamily: "'Trebuchet MS', sans-serif" }}
+                      >
+                        <ThumbsUp className="w-3.5 h-3.5" /> Like
+                      </button>
+                      <button
+                        className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-semibold text-[#4e5a7b] hover:bg-[#f2f4fb] transition-colors"
+                        style={{ fontFamily: "'Trebuchet MS', sans-serif" }}
+                      >
+                        <MessageCircle className="w-3.5 h-3.5" /> Comment
+                      </button>
+                      <button
+                        className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-semibold text-[#4e5a7b] hover:bg-[#f2f4fb] transition-colors"
+                        style={{ fontFamily: "'Trebuchet MS', sans-serif" }}
+                      >
+                        <Share2 className="w-3.5 h-3.5" /> Share
+                      </button>
                     </div>
 
                   </article>
