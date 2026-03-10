@@ -175,8 +175,7 @@ export default function Students() {
     setCurrentHeaderSlide((prev) => (prev + 1) % headerSlides.length);
 
   const revealClass = (visible: boolean) =>
-    `transform-gpu transition-all duration-700 ease-out ${
-      visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+    `transform-gpu transition-all duration-700 ease-out ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
     }`;
 
   return (
@@ -236,11 +235,10 @@ export default function Students() {
               key={index}
               type="button"
               onClick={() => setCurrentHeaderSlide(index)}
-              className={`rounded-full transition-all duration-300 ${
-                index === currentHeaderSlide
+              className={`rounded-full transition-all duration-300 ${index === currentHeaderSlide
                   ? "w-6 h-2.5 bg-[#ef8a22]"
                   : "w-2.5 h-2.5 bg-white/40 hover:bg-white/70"
-              }`}
+                }`}
               aria-label={`Go to slide ${index + 1}`}
             />
           ))}

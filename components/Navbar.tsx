@@ -93,8 +93,8 @@ const Navbar = () => {
                 <Link
                   href={link.to}
                   className={`text-sm font-medium transition-colors ${isActive
-                      ? "text-accent border-b-2 border-accent pb-1"
-                      : "text-slate-600 hover:text-accent"
+                    ? "text-accent border-b-2 border-accent pb-1"
+                    : "text-slate-600 hover:text-accent"
                     }`}
                 >
                   {link.label}
@@ -122,8 +122,8 @@ const Navbar = () => {
       {/* Mobile Menu */}
       <div
         className={`md:hidden absolute top-full left-0 right-0 z-[100] overflow-hidden bg-background border-b border-border shadow-md transition-all duration-300 ease-in-out ${mobileMenuOpen
-            ? "max-h-[calc(100vh-5rem)] opacity-100 pointer-events-auto"
-            : "max-h-0 opacity-0 pointer-events-none"
+          ? "max-h-[calc(100vh-5rem)] opacity-100 pointer-events-auto"
+          : "max-h-0 opacity-0 pointer-events-none"
           }`}
       >
         <div

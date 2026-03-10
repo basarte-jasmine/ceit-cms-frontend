@@ -89,9 +89,8 @@ export default function Index() {
         {featuredFacilities.map((facility, idx) => (
           <div
             key={facility.slug}
-            className={`absolute inset-0 transition-opacity duration-700 ease-out ${
-              idx === currentSlide ? "opacity-100" : "opacity-0"
-            }`}
+            className={`absolute inset-0 transition-opacity duration-700 ease-out ${idx === currentSlide ? "opacity-100" : "opacity-0"
+              }`}
             style={{
               backgroundImage: `linear-gradient(135deg, rgba(10,24,52,0.94) 0%, rgba(20,43,86,0.9) 52%, rgba(9,25,58,0.94) 100%), url('${facility.image}')`,
               backgroundSize: "cover",
@@ -157,9 +156,8 @@ export default function Index() {
                   {featuredFacilities.map((facility, idx) => (
                     <div
                       key={facility.slug}
-                      className={`absolute inset-0 transition-all duration-700 ease-[cubic-bezier(.22,.61,.36,1)] ${
-                        idx === currentSlide ? "opacity-100 translate-x-0" : "opacity-0 translate-x-2 pointer-events-none"
-                      }`}
+                      className={`absolute inset-0 transition-all duration-700 ease-[cubic-bezier(.22,.61,.36,1)] ${idx === currentSlide ? "opacity-100 translate-x-0" : "opacity-0 translate-x-2 pointer-events-none"
+                        }`}
                     >
                       <div className="grid grid-cols-1 md:grid-cols-2 h-full">
                         <Link
@@ -239,9 +237,8 @@ export default function Index() {
                     key={i}
                     type="button"
                     onClick={() => goTo(i)}
-                    className={`h-2 rounded-full transition-all duration-300 ${
-                      i === currentSlide ? "w-7 bg-amber-400" : "w-2 bg-white/45 hover:bg-white/65"
-                    }`}
+                    className={`h-2 rounded-full transition-all duration-300 ${i === currentSlide ? "w-7 bg-amber-400" : "w-2 bg-white/45 hover:bg-white/65"
+                      }`}
                     aria-label={`Go to slide ${i + 1}`}
                   />
                 ))}
@@ -373,9 +370,8 @@ export default function Index() {
 
       <section
         ref={registrarRef}
-        className={`py-16 md:py-20 border-b border-[#e3e7f1] bg-white transform-gpu transition-all duration-700 ease-out ${
-          isRegistrarVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-30 translate-y-8 scale-95"
-        }`}
+        className={`py-16 md:py-20 border-b border-[#e3e7f1] bg-white transform-gpu transition-all duration-700 ease-out ${isRegistrarVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-30 translate-y-8 scale-95"
+          }`}
       >
         <div className="mx-auto max-w-[1200px] px-5 md:px-8">
           <div className="flex items-center gap-3 mb-6">
