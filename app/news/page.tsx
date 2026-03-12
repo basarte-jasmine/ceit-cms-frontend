@@ -68,11 +68,11 @@ function mapArticleToPost(article: Article): NewsPost {
 }
 
 const tagColors: Record<string, { bg: string; text: string; border: string }> = {
-  Enrollment:    { bg: "bg-blue-50",    text: "text-blue-600",    border: "border-blue-200" },
-  Achievement:   { bg: "bg-amber-50",   text: "text-amber-600",   border: "border-amber-200" },
-  Event:         { bg: "bg-violet-50",  text: "text-violet-600",  border: "border-violet-200" },
-  Partnership:   { bg: "bg-emerald-50", text: "text-emerald-600", border: "border-emerald-200" },
-  Announcement:  { bg: "bg-rose-50",    text: "text-rose-600",    border: "border-rose-200" },
+  Enrollment: { bg: "bg-blue-50", text: "text-blue-600", border: "border-blue-200" },
+  Achievement: { bg: "bg-amber-50", text: "text-amber-600", border: "border-amber-200" },
+  Event: { bg: "bg-violet-50", text: "text-violet-600", border: "border-violet-200" },
+  Partnership: { bg: "bg-emerald-50", text: "text-emerald-600", border: "border-emerald-200" },
+  Announcement: { bg: "bg-rose-50", text: "text-rose-600", border: "border-rose-200" },
 };
 
 export default function NewsPage() {
